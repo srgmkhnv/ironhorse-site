@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-18T23:44:14.332567+00:00",
+  "title": "Design System: Iron Horse",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Studio Ink",
+        "tonalRamp": [
+          "oklch(15% 0.00454 264.44)",
+          "oklch(26% 0.00454 264.44)",
+          "oklch(38% 0.00454 264.44)",
+          "oklch(49% 0.00454 264.44)",
+          "oklch(61% 0.00454 264.44)",
+          "oklch(72% 0.00454 264.44)",
+          "oklch(84% 0.00454 264.44)",
+          "oklch(95% 0.00454 264.44)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel Black",
+        "tonalRamp": [
+          "oklch(15% 0.00428 264.47)",
+          "oklch(26% 0.00428 264.47)",
+          "oklch(38% 0.00428 264.47)",
+          "oklch(49% 0.00428 264.47)",
+          "oklch(61% 0.00428 264.47)",
+          "oklch(72% 0.00428 264.47)",
+          "oklch(84% 0.00428 264.47)",
+          "oklch(95% 0.00428 264.47)"
+        ]
+      },
+      "silver": {
+        "role": "neutral",
+        "displayName": "Silver",
+        "tonalRamp": [
+          "oklch(15% 0.00286 128.49)",
+          "oklch(26% 0.00286 128.49)",
+          "oklch(38% 0.00286 128.49)",
+          "oklch(49% 0.00286 128.49)",
+          "oklch(61% 0.00286 128.49)",
+          "oklch(72% 0.00286 128.49)",
+          "oklch(84% 0.00286 128.49)",
+          "oklch(95% 0.00286 128.49)"
+        ]
+      },
+      "red": {
+        "role": "primary",
+        "displayName": "Brand Red",
+        "tonalRamp": [
+          "oklch(15% 0.21927 25.59)",
+          "oklch(26% 0.21927 25.59)",
+          "oklch(38% 0.21927 25.59)",
+          "oklch(49% 0.21927 25.59)",
+          "oklch(61% 0.21927 25.59)",
+          "oklch(72% 0.21927 25.59)",
+          "oklch(84% 0.21927 25.59)",
+          "oklch(95% 0.21927 25.59)"
+        ]
+      },
+      "deep-red": {
+        "role": "primary",
+        "displayName": "Deep Red",
+        "tonalRamp": [
+          "oklch(15% 0.19361 25.49)",
+          "oklch(26% 0.19361 25.49)",
+          "oklch(38% 0.19361 25.49)",
+          "oklch(49% 0.19361 25.49)",
+          "oklch(61% 0.19361 25.49)",
+          "oklch(72% 0.19361 25.49)",
+          "oklch(84% 0.19361 25.49)",
+          "oklch(95% 0.19361 25.49)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Rule Grey",
+        "tonalRamp": [
+          "oklch(15% 0.00544 271.25)",
+          "oklch(26% 0.00544 271.25)",
+          "oklch(38% 0.00544 271.25)",
+          "oklch(49% 0.00544 271.25)",
+          "oklch(61% 0.00544 271.25)",
+          "oklch(72% 0.00544 271.25)",
+          "oklch(84% 0.00544 271.25)",
+          "oklch(95% 0.00544 271.25)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "tonalRamp": [
+          "oklch(15% 0.00000 89.88)",
+          "oklch(26% 0.00000 89.88)",
+          "oklch(38% 0.00000 89.88)",
+          "oklch(49% 0.00000 89.88)",
+          "oklch(61% 0.00000 89.88)",
+          "oklch(72% 0.00000 89.88)",
+          "oklch(84% 0.00000 89.88)",
+          "oklch(95% 0.00000 89.88)"
+        ]
+      },
+      "supporting": {
+        "role": "neutral",
+        "displayName": "Supporting Silver",
+        "tonalRamp": [
+          "oklch(15% 0.00480 258.33)",
+          "oklch(26% 0.00480 258.33)",
+          "oklch(38% 0.00480 258.33)",
+          "oklch(49% 0.00480 258.33)",
+          "oklch(61% 0.00480 258.33)",
+          "oklch(72% 0.00480 258.33)",
+          "oklch(84% 0.00480 258.33)",
+          "oklch(95% 0.00480 258.33)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Hero Display",
+        "purpose": "Hero headline; responsive size changes are recorded in DESIGN.md."
+      },
+      "headline": {
+        "displayName": "Section Headline",
+        "purpose": "Major section headings."
+      },
+      "title": {
+        "displayName": "Panel Title",
+        "purpose": "Service detail heading."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Golos reading text."
+      },
+      "label": {
+        "displayName": "Action Label",
+        "purpose": "Button labels."
+      },
+      "support": {
+        "displayName": "Supporting Copy",
+        "purpose": "Service, form and branch notes after final cascade overrides."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Shared engineered easing for transforms and reveals."
+      },
+      {
+        "name": "button-state",
+        "value": ".25s",
+        "purpose": "Button background and border state changes; CSS default ease."
+      },
+      {
+        "name": "directional",
+        "value": ".4s",
+        "purpose": "Arrow movement, underline reveal and checkbox-plus rotation."
+      },
+      {
+        "name": "panel-change",
+        "value": ".45s",
+        "purpose": "Panel opacity, blur and small vertical reveal."
+      },
+      {
+        "name": "light-fade",
+        "value": ".8s",
+        "purpose": "Pointer highlight opacity."
+      },
+      {
+        "name": "image-develop",
+        "value": "1.8s",
+        "purpose": "Initial hero scale/brightness/blur development."
+      },
+      {
+        "name": "headline-enter",
+        "value": "1.2s",
+        "purpose": "Initial hero headline reveal."
+      },
+      {
+        "name": "copy-enter",
+        "value": "1.5s",
+        "purpose": "Initial hero paragraph reveal."
+      },
+      {
+        "name": "line-flow",
+        "value": "3s",
+        "purpose": "Repeating hero scroll-line movement."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Disable all animation and transitions, smooth scrolling and pointer-light layer."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "1600px"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "1180px"
+      },
+      {
+        "name": "tablet",
+        "value": "850px"
+      },
+      {
+        "name": "mobile",
+        "value": "600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Red contact button",
+      "kind": "button",
+      "refersTo": "button-red",
+      "description": "Squared WhatsApp action with a directional arrow.",
+      "html": "<button class=\"ds-button-red\">Обсудить уход <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 18 18 6M6 6h12v12\"/></svg></button>",
+      "css": ".ds-button-red{font-family:var(--body,Golos,sans-serif);font-size:14px;font-weight:500;display:inline-flex;align-items:center;justify-content:space-between;gap:36px;min-height:58px;padding:17px 24px;border:1px solid transparent;border-radius:0;text-decoration:none;cursor:pointer;transition:background .25s,transform .4s var(--ease,cubic-bezier(.16,1,.3,1)),border-color .25s;background:var(--red,#d71425);color:#fff}.ds-button-red:hover{background:var(--deep-red,#b60f1e)}.ds-button-red:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}.ds-button-red svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-button-red:hover svg{transform:translate(3px,-3px)}@media(max-width:600px){.ds-button-red{min-height:54px;padding:15px 20px;font-size:13px}}@media(prefers-reduced-motion:reduce){.ds-button-red,.ds-button-red *{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "Light contact button",
+      "kind": "button",
+      "refersTo": "button-light",
+      "description": "Squared WhatsApp action with a directional arrow.",
+      "html": "<button class=\"ds-button-light\">Обсудить уход <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 18 18 6M6 6h12v12\"/></svg></button>",
+      "css": ".ds-button-light{font-family:var(--body,Golos,sans-serif);font-size:14px;font-weight:500;display:inline-flex;align-items:center;justify-content:space-between;gap:36px;min-height:58px;padding:17px 24px;border:1px solid transparent;border-radius:0;text-decoration:none;cursor:pointer;transition:background .25s,transform .4s var(--ease,cubic-bezier(.16,1,.3,1)),border-color .25s;background:var(--silver,#eeefed);color:var(--ink,#0c0d0f)}.ds-button-light:hover{background:#fff}.ds-button-light:focus-visible{outline:2px solid white;outline-offset:6px}.ds-button-light svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-button-light:hover svg{transform:translate(3px,-3px)}@media(max-width:600px){.ds-button-light{min-height:54px;padding:15px 20px;font-size:13px}}@media(prefers-reduced-motion:reduce){.ds-button-light,.ds-button-light *{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "Desktop navigation",
+      "kind": "nav",
+      "description": "Quiet horizontal links with a red reveal underline.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#services\">Услуги</a><a href=\"#care\">Подобрать уход</a><a href=\"#studios\">Контакты</a></nav>",
+      "css": ".ds-nav{display:flex;gap:27px;padding:12px;background:var(--ink,#0c0d0f);color:#c4c5c8;font:13px var(--body,Golos,sans-serif)}.ds-nav a{position:relative;padding:16px 0;color:inherit;text-decoration:none}.ds-nav a:after{content:\"\";height:1px;background:var(--red,#d71425);position:absolute;bottom:10px;left:0;width:100%;transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-nav a:hover{color:white}.ds-nav a:hover:after{transform:scaleX(1)}.ds-nav a:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(prefers-reduced-motion:reduce){.ds-nav,.ds-nav *{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "Service tab",
+      "kind": "custom",
+      "description": "Ruled service choice; inverts into a rectangular mobile tab.",
+      "html": "<button class=\"ds-service-tab\" role=\"tab\" aria-selected=\"true\">Антигравийная плёнка <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 18 18 6M6 6h12v12\"/></svg></button>",
+      "css": ".ds-service-tab{display:flex;width:100%;align-items:center;justify-content:space-between;padding:24px 0;background:var(--silver,#eeefed);color:var(--ink,#0c0d0f);border:0;border-bottom:1px solid #c7c9c9;font:clamp(15px,1.35vw,20px) var(--body,Golos,sans-serif);text-align:left;cursor:pointer;transition:color .25s,padding .5s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-service-tab[aria-selected=true]{color:var(--deep-red,#b60f1e);padding-left:12px}.ds-service-tab:hover{color:var(--deep-red,#b60f1e)}.ds-service-tab svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5}.ds-service-tab:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(max-width:600px){.ds-service-tab{width:auto;min-height:44px;border:1px solid #bfc1c0;padding:12px 14px;font-size:12px;white-space:nowrap}.ds-service-tab[aria-selected=true]{padding:12px 14px;color:white;background:var(--ink,#0c0d0f);border-color:var(--ink,#0c0d0f)}.ds-service-tab svg{display:none}}@media(prefers-reduced-motion:reduce){.ds-service-tab,.ds-service-tab *{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "Service tag",
+      "kind": "chip",
+      "refersTo": "service-tag",
+      "description": "Static outlined scope label, not an interactive filter.",
+      "html": "<span class=\"ds-tag\">Зоны риска</span>",
+      "css": ".ds-tag{display:inline-block;font:11px var(--body,Golos,sans-serif);color:#c5c6c8;background:var(--panel,#151618);border:1px solid #4a4b4e;border-radius:0;padding:5px 9px}@media(prefers-reduced-motion:reduce){.ds-tag,.ds-tag *{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "Care choice",
+      "kind": "input",
+      "refersTo": "care-option",
+      "description": "Checkbox tile inverts when selected and rotates its plus.",
+      "html": "<label class=\"ds-choice\"><input type=\"checkbox\"><span>Защитить кузов</span><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg></label>",
+      "css": ".ds-choice{position:relative;display:flex;align-items:center;justify-content:space-between;min-height:58px;padding:15px 16px;gap:10px;border:1px solid #ffffff65;background:var(--deep-red,#b60f1e);color:white;font:13px var(--body,Golos,sans-serif);cursor:pointer;transition:background .25s,border-color .25s}.ds-choice input{appearance:none;position:absolute;inset:0;width:100%;height:100%;margin:0;cursor:pointer;border-radius:0}.ds-choice svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.5;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-choice:has(input:checked){background:white;color:var(--deep-red,#b60f1e);border-color:white}.ds-choice:has(input:checked) svg{transform:rotate(45deg)}.ds-choice:hover{border-color:white;background:#ffffff15}.ds-choice:has(input:checked):hover{background:white}.ds-choice input:focus-visible{outline:2px solid white;outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-choice,.ds-choice *{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "Vehicle field",
+      "kind": "input",
+      "description": "Transparent underlined text field on the red care surface.",
+      "html": "<label class=\"ds-field\">Ваш автомобиль<input type=\"text\" placeholder=\"Марка и модель\"></label>",
+      "css": ".ds-field{display:block;padding:16px;background:var(--deep-red,#b60f1e);color:white;font:12px var(--body,Golos,sans-serif)}.ds-field input{display:block;width:100%;background:none;color:white;border:0;border-bottom:1px solid #ffffff80;border-radius:0;padding:15px 0 12px;font:15px var(--body,Golos,sans-serif);caret-color:white}.ds-field input::placeholder{color:#ffe1e5;opacity:1}.ds-field input:focus-visible{outline:2px solid white;outline-offset:3px}@media(max-width:600px){.ds-field input{font-size:16px}}@media(prefers-reduced-motion:reduce){.ds-field,.ds-field *{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "Branch panel",
+      "kind": "card",
+      "refersTo": "studio-panel",
+      "description": "Flat silver-gray location panel with a clear address hierarchy.",
+      "html": "<article class=\"ds-studio\"><p>Москва</p><h3>Олимпийский проспект,<br>16, строение 5</h3><a href=\"tel:+79104989211\">+7 (910) 498-92-11</a></article>",
+      "css": ".ds-studio{padding:42px;background:#dedfdd;color:var(--ink,#0c0d0f);border-radius:0;font-family:var(--body,Golos,sans-serif)}.ds-studio p{margin:0 0 26px;color:#5c5f61;font-size:12px}.ds-studio h3{margin:0;font:500 clamp(21px,2.15vw,32px)/1.45 var(--display,Unbounded,sans-serif);letter-spacing:-.025em}.ds-studio a{display:inline-block;margin-top:20px;font-size:19px;color:inherit;text-decoration:none}.ds-studio a:hover{text-decoration:underline;text-underline-offset:5px}.ds-studio a:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(max-width:1180px){.ds-studio{padding:32px}}@media(max-width:850px){.ds-studio{padding:30px}}@media(max-width:600px){.ds-studio{padding:27px 24px}.ds-studio h3{font-size:23px}.ds-studio a{font-size:18px}}@media(prefers-reduced-motion:reduce){.ds-studio,.ds-studio *{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "FAQ disclosure",
+      "kind": "custom",
+      "description": "Native ruled disclosure with a rotating plus indicator.",
+      "html": "<details class=\"ds-faq\"><summary>Как узнать точную стоимость?<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg></summary><p>Напишите в выбранный филиал: укажите марку, модель и желаемые работы.</p></details>",
+      "css": ".ds-faq{background:var(--ink,#0c0d0f);color:var(--silver,#eeefed);border-top:1px solid var(--line,#343538);font-family:var(--body,Golos,sans-serif)}.ds-faq summary{display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:16px;padding:25px 0;cursor:pointer;list-style:none}.ds-faq summary::-webkit-details-marker{display:none}.ds-faq svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5;color:#b5b7ba;transition:transform .5s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-faq[open] svg{transform:rotate(45deg);color:#ee3747}.ds-faq p{margin:0;font-size:14px;color:#acafb2;line-height:1.8;padding-bottom:25px}.ds-faq summary:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(prefers-reduced-motion:reduce){.ds-faq,.ds-faq *{animation:none!important;transition:none!important}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Light Tunnel",
+    "overview": "The Light Tunnel translates the supplied black, red and silver shield into a dark automotive studio: broad engineered lettering, a single illuminated automobile, precise rules and squared controls. Large silver service and branch surfaces interrupt the black ground; saturated red fields give the care form and final invitation their own visual weight.\n\nThe built system is flat and deliberate. Light lives inside imagery and its masking layers, while interface states use a red stroke, an underline, a small directional movement or an inverted surface. Russian body copy stays sober and readable beside the wide display face. Generated automotive illustrations remain visibly identified until authentic client photography is supplied.",
+    "keyCharacteristics": [
+      "Black studio ground with silver reading surfaces and branded red fields.",
+      "Wide Unbounded headings paired with compact Golos text.",
+      "Squared controls, fine rules and flat tonal layers.",
+      "Image-bound light, restrained directional motion and a reduced-motion alternative."
+    ],
+    "rules": [
+      {
+        "name": "The Branded Surface Rule",
+        "body": "Use the existing black, silver and red surface relationships: dark studio framing, silver information sections, and red contact or selection fields.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Use Unbounded for the brand and major headings; use Golos for prose, controls and operational detail.",
+        "section": "typography"
+      },
+      {
+        "name": "The Light Within Rule",
+        "body": "Keep the light reveal and photographic gradients inside image composition; interface surfaces use tonal separation and fine rules rather than box shadows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve the supplied shield, black/red/silver identity and two-font relationship.",
+      "Do retain square controls, visible keyboard focus and explicit selected states.",
+      "Do preserve the responsive tab orientation, scrollable mobile choices and reduced-motion behavior.",
+      "Do label generated illustrations visibly and preserve their provenance when replacing or reusing imagery."
+    ],
+    "donts": [
+      "Don't present generated illustrations as completed client work.",
+      "Don't substitute rounded pill controls or floating shadow cards for the built squared, flat components.",
+      "Don't make pointer-following light or animation necessary to read content or complete a contact request."
+    ]
+  }
+}

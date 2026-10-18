@@ -1,0 +1,7 @@
+{
+  "name": "iron-horse-detailing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Iron Horse detailing studio website",
+  "scripts": { "start": "python -m http.server 3000 --directory dist", "check": "node --check dist/app.js" }
+}
