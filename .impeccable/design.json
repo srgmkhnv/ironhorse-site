@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-18T23:44:14.332567+00:00",
+  "generatedAt": "2026-10-19T00:13:55.283677+00:00",
   "title": "Design System: Iron Horse",
   "extensions": {
     "colorMeta": {
@@ -143,57 +143,108 @@
         "purpose": "Service, form and branch notes after final cascade overrides."
       }
     },
-    "shadows": [],
+    "shadows": [
+      {
+        "name": "inspection-beam",
+        "value": "0 0 18px 2px #df142947",
+        "purpose": "Narrow local photographic inspection light; not a content-panel elevation."
+      },
+      {
+        "name": "range-thumb",
+        "value": "0 2px 8px #0008",
+        "purpose": "Local contrast under the WebKit light-control thumb."
+      },
+      {
+        "name": "compact-menu-edge",
+        "value": "0 18px 30px #0005",
+        "purpose": "Edge separation for the full-height compact navigation overlay."
+      }
+    ],
     "motion": [
       {
         "name": "ease",
         "value": "cubic-bezier(.16,1,.3,1)",
-        "purpose": "Shared engineered easing for transforms and reveals."
+        "purpose": "Shared easing for engineered reveals and state geometry."
       },
       {
         "name": "button-state",
-        "value": ".25s",
-        "purpose": "Button background and border state changes; CSS default ease."
+        "value": "250ms",
+        "purpose": "Button background/border and care-tile border state changes."
       },
       {
         "name": "directional",
-        "value": ".4s",
-        "purpose": "Arrow movement, underline reveal and checkbox-plus rotation."
+        "value": "400ms",
+        "purpose": "Button arrows, navigation underlines and checkbox-plus rotation."
       },
       {
         "name": "panel-change",
-        "value": ".45s",
-        "purpose": "Panel opacity, blur and small vertical reveal."
+        "value": "500ms",
+        "purpose": "Cancellable opacity/blur/22px reveal for service, branch and count updates."
       },
       {
-        "name": "light-fade",
-        "value": ".8s",
-        "purpose": "Pointer highlight opacity."
+        "name": "service-image-out",
+        "value": "500ms",
+        "purpose": "Outgoing image crossfade with scale to 1.06; superseded image transitions are cancelled."
       },
       {
-        "name": "image-develop",
-        "value": "1.8s",
-        "purpose": "Initial hero scale/brightness/blur development."
+        "name": "service-image-in",
+        "value": "700ms",
+        "purpose": "Incoming photo scale from 1.065 and brightness from .65."
       },
       {
-        "name": "headline-enter",
-        "value": "1.2s",
-        "purpose": "Initial hero headline reveal."
+        "name": "hero-copy-enter",
+        "value": "900ms",
+        "purpose": "Finite hero text/actions entrance, staggered by 90ms."
       },
       {
-        "name": "copy-enter",
-        "value": "1.5s",
-        "purpose": "Initial hero paragraph reveal."
+        "name": "hero-camera-enter",
+        "value": "1500ms",
+        "purpose": "Finite camera entrance from scale 1.12; scrolling cancels it."
       },
       {
-        "name": "line-flow",
-        "value": "3s",
-        "purpose": "Repeating hero scroll-line movement."
+        "name": "hero-light-enter",
+        "value": "2400ms cubic-bezier(.4,0,.2,1)",
+        "purpose": "One photographic mask pass from -15% to 95%; scrolling takes over."
       },
       {
-        "name": "reduced-motion",
-        "value": "prefers-reduced-motion: reduce",
-        "purpose": "Disable all animation and transitions, smooth scrolling and pointer-light layer."
+        "name": "scroll-inspection",
+        "value": "76svh desktop / 65svh mobile",
+        "purpose": "Sticky inspection travel; scroll steers beam, camera, text, progress lines and brand band. No loop."
+      },
+      {
+        "name": "heading-reveal",
+        "value": "750ms",
+        "purpose": "Once-per-heading line reveal, staggered by 75ms."
+      },
+      {
+        "name": "menu-open",
+        "value": "550ms",
+        "purpose": "Cancellable clip reveal; links stagger by 55ms up to 165ms."
+      },
+      {
+        "name": "menu-close",
+        "value": "230ms",
+        "purpose": "Cancellable close guarded against stale completion hiding a reopened menu."
+      },
+      {
+        "name": "faq-expand",
+        "value": "360ms",
+        "purpose": "Cancellable measured-height and opacity transition; settles immediately when motion turns off."
+      },
+      {
+        "name": "care-press",
+        "value": "350ms",
+        "purpose": "Direct checkbox feedback scales .94 to 1; color inversion is immediate."
+      },
+      {
+        "name": "care-selection-rule",
+        "value": "450ms",
+        "purpose": "Two-pixel selected-tile rule expands with shared easing."
+      },
+      {
+        "name": "motion-preference",
+        "value": "prefers-reduced-motion: reduce / data-motion=\"off\"",
+        "purpose": "System preference defaults to quiet mode; explicit page-local opt-in restores motion. Off cancels active animations, hides light/control, resets transforms and disables transitions/smooth scroll."
       }
     ],
     "breakpoints": [
@@ -212,6 +263,14 @@
       {
         "name": "mobile",
         "value": "600px"
+      },
+      {
+        "name": "narrow-mobile",
+        "value": "360px"
+      },
+      {
+        "name": "short-screen-height",
+        "value": "650px"
       }
     ]
   },
@@ -222,7 +281,7 @@
       "refersTo": "button-red",
       "description": "Squared WhatsApp action with a directional arrow.",
       "html": "<button class=\"ds-button-red\">Обсудить уход <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 18 18 6M6 6h12v12\"/></svg></button>",
-      "css": ".ds-button-red{font-family:var(--body,Golos,sans-serif);font-size:14px;font-weight:500;display:inline-flex;align-items:center;justify-content:space-between;gap:36px;min-height:58px;padding:17px 24px;border:1px solid transparent;border-radius:0;text-decoration:none;cursor:pointer;transition:background .25s,transform .4s var(--ease,cubic-bezier(.16,1,.3,1)),border-color .25s;background:var(--red,#d71425);color:#fff}.ds-button-red:hover{background:var(--deep-red,#b60f1e)}.ds-button-red:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}.ds-button-red svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-button-red:hover svg{transform:translate(3px,-3px)}@media(max-width:600px){.ds-button-red{min-height:54px;padding:15px 20px;font-size:13px}}@media(prefers-reduced-motion:reduce){.ds-button-red,.ds-button-red *{animation:none!important;transition:none!important}}"
+      "css": ".ds-button-red{font-family:var(--body,Golos,sans-serif);font-size:14px;font-weight:500;display:inline-flex;align-items:center;justify-content:space-between;gap:36px;min-height:58px;padding:17px 24px;border:1px solid transparent;border-radius:0;text-decoration:none;cursor:pointer;transition:background .25s,transform .4s var(--ease,cubic-bezier(.16,1,.3,1)),border-color .25s;background:var(--red,#d71425);color:#fff}.ds-button-red:hover{background:var(--deep-red,#b60f1e)}.ds-button-red:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}.ds-button-red svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-button-red:hover svg{transform:translate(3px,-3px)}@media(max-width:600px){.ds-button-red{min-height:54px;padding:15px 20px;font-size:13px}}@media(prefers-reduced-motion:reduce){:host-context(html:not([data-motion=\"on\"])) .ds-button-red,:host-context(html:not([data-motion=\"on\"])) .ds-button-red *{animation:none!important;transition:none!important}}:host-context(html[data-motion=\"off\"]) *,:host-context(html[data-motion=\"off\"]) *:before,:host-context(html[data-motion=\"off\"]) *:after{animation:none!important;transition:none!important}"
     },
     {
       "name": "Light contact button",
@@ -230,21 +289,21 @@
       "refersTo": "button-light",
       "description": "Squared WhatsApp action with a directional arrow.",
       "html": "<button class=\"ds-button-light\">Обсудить уход <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 18 18 6M6 6h12v12\"/></svg></button>",
-      "css": ".ds-button-light{font-family:var(--body,Golos,sans-serif);font-size:14px;font-weight:500;display:inline-flex;align-items:center;justify-content:space-between;gap:36px;min-height:58px;padding:17px 24px;border:1px solid transparent;border-radius:0;text-decoration:none;cursor:pointer;transition:background .25s,transform .4s var(--ease,cubic-bezier(.16,1,.3,1)),border-color .25s;background:var(--silver,#eeefed);color:var(--ink,#0c0d0f)}.ds-button-light:hover{background:#fff}.ds-button-light:focus-visible{outline:2px solid white;outline-offset:6px}.ds-button-light svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-button-light:hover svg{transform:translate(3px,-3px)}@media(max-width:600px){.ds-button-light{min-height:54px;padding:15px 20px;font-size:13px}}@media(prefers-reduced-motion:reduce){.ds-button-light,.ds-button-light *{animation:none!important;transition:none!important}}"
+      "css": ".ds-button-light{font-family:var(--body,Golos,sans-serif);font-size:14px;font-weight:500;display:inline-flex;align-items:center;justify-content:space-between;gap:36px;min-height:58px;padding:17px 24px;border:1px solid transparent;border-radius:0;text-decoration:none;cursor:pointer;transition:background .25s,transform .4s var(--ease,cubic-bezier(.16,1,.3,1)),border-color .25s;background:var(--silver,#eeefed);color:var(--ink,#0c0d0f)}.ds-button-light:hover{background:#fff}.ds-button-light:focus-visible{outline:2px solid white;outline-offset:6px}.ds-button-light svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-button-light:hover svg{transform:translate(3px,-3px)}@media(max-width:600px){.ds-button-light{min-height:54px;padding:15px 20px;font-size:13px}}@media(prefers-reduced-motion:reduce){:host-context(html:not([data-motion=\"on\"])) .ds-button-light,:host-context(html:not([data-motion=\"on\"])) .ds-button-light *{animation:none!important;transition:none!important}}:host-context(html[data-motion=\"off\"]) *,:host-context(html[data-motion=\"off\"]) *:before,:host-context(html[data-motion=\"off\"]) *:after{animation:none!important;transition:none!important}"
     },
     {
       "name": "Desktop navigation",
       "kind": "nav",
       "description": "Quiet horizontal links with a red reveal underline.",
       "html": "<nav class=\"ds-nav\"><a href=\"#services\">Услуги</a><a href=\"#care\">Подобрать уход</a><a href=\"#studios\">Контакты</a></nav>",
-      "css": ".ds-nav{display:flex;gap:27px;padding:12px;background:var(--ink,#0c0d0f);color:#c4c5c8;font:13px var(--body,Golos,sans-serif)}.ds-nav a{position:relative;padding:16px 0;color:inherit;text-decoration:none}.ds-nav a:after{content:\"\";height:1px;background:var(--red,#d71425);position:absolute;bottom:10px;left:0;width:100%;transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-nav a:hover{color:white}.ds-nav a:hover:after{transform:scaleX(1)}.ds-nav a:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(prefers-reduced-motion:reduce){.ds-nav,.ds-nav *{animation:none!important;transition:none!important}}"
+      "css": ".ds-nav{display:flex;gap:27px;padding:12px;background:var(--ink,#0c0d0f);color:#c4c5c8;font:13px var(--body,Golos,sans-serif)}.ds-nav a{position:relative;padding:16px 0;color:inherit;text-decoration:none}.ds-nav a:after{content:\"\";height:1px;background:var(--red,#d71425);position:absolute;bottom:10px;left:0;width:100%;transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-nav a:hover{color:white}.ds-nav a:hover:after{transform:scaleX(1)}.ds-nav a:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(prefers-reduced-motion:reduce){:host-context(html:not([data-motion=\"on\"])) .ds-nav,:host-context(html:not([data-motion=\"on\"])) .ds-nav *{animation:none!important;transition:none!important}}:host-context(html[data-motion=\"off\"]) *,:host-context(html[data-motion=\"off\"]) *:before,:host-context(html[data-motion=\"off\"]) *:after{animation:none!important;transition:none!important}"
     },
     {
       "name": "Service tab",
       "kind": "custom",
       "description": "Ruled service choice; inverts into a rectangular mobile tab.",
       "html": "<button class=\"ds-service-tab\" role=\"tab\" aria-selected=\"true\">Антигравийная плёнка <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 18 18 6M6 6h12v12\"/></svg></button>",
-      "css": ".ds-service-tab{display:flex;width:100%;align-items:center;justify-content:space-between;padding:24px 0;background:var(--silver,#eeefed);color:var(--ink,#0c0d0f);border:0;border-bottom:1px solid #c7c9c9;font:clamp(15px,1.35vw,20px) var(--body,Golos,sans-serif);text-align:left;cursor:pointer;transition:color .25s,padding .5s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-service-tab[aria-selected=true]{color:var(--deep-red,#b60f1e);padding-left:12px}.ds-service-tab:hover{color:var(--deep-red,#b60f1e)}.ds-service-tab svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5}.ds-service-tab:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(max-width:600px){.ds-service-tab{width:auto;min-height:44px;border:1px solid #bfc1c0;padding:12px 14px;font-size:12px;white-space:nowrap}.ds-service-tab[aria-selected=true]{padding:12px 14px;color:white;background:var(--ink,#0c0d0f);border-color:var(--ink,#0c0d0f)}.ds-service-tab svg{display:none}}@media(prefers-reduced-motion:reduce){.ds-service-tab,.ds-service-tab *{animation:none!important;transition:none!important}}"
+      "css": ".ds-service-tab{display:flex;width:100%;align-items:center;justify-content:space-between;padding:24px 0;background:var(--silver,#eeefed);color:var(--ink,#0c0d0f);border:0;border-bottom:1px solid #c7c9c9;font:clamp(15px,1.35vw,20px) var(--body,Golos,sans-serif);text-align:left;cursor:pointer;transition:color .25s,padding .5s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-service-tab[aria-selected=true]{color:var(--deep-red,#b60f1e);padding-left:12px}.ds-service-tab:hover{color:var(--deep-red,#b60f1e)}.ds-service-tab svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5}.ds-service-tab:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(max-width:600px){.ds-service-tab{width:auto;min-height:44px;border:1px solid #bfc1c0;padding:12px 14px;font-size:12px;white-space:nowrap}.ds-service-tab[aria-selected=true]{padding:12px 14px;color:white;background:var(--ink,#0c0d0f);border-color:var(--ink,#0c0d0f)}.ds-service-tab svg{display:none}}@media(prefers-reduced-motion:reduce){:host-context(html:not([data-motion=\"on\"])) .ds-service-tab,:host-context(html:not([data-motion=\"on\"])) .ds-service-tab *{animation:none!important;transition:none!important}}:host-context(html[data-motion=\"off\"]) *,:host-context(html[data-motion=\"off\"]) *:before,:host-context(html[data-motion=\"off\"]) *:after{animation:none!important;transition:none!important}"
     },
     {
       "name": "Service tag",
@@ -252,22 +311,22 @@
       "refersTo": "service-tag",
       "description": "Static outlined scope label, not an interactive filter.",
       "html": "<span class=\"ds-tag\">Зоны риска</span>",
-      "css": ".ds-tag{display:inline-block;font:11px var(--body,Golos,sans-serif);color:#c5c6c8;background:var(--panel,#151618);border:1px solid #4a4b4e;border-radius:0;padding:5px 9px}@media(prefers-reduced-motion:reduce){.ds-tag,.ds-tag *{animation:none!important;transition:none!important}}"
+      "css": ".ds-tag{display:inline-block;font:11px var(--body,Golos,sans-serif);color:#c5c6c8;background:var(--panel,#151618);border:1px solid #4a4b4e;border-radius:0;padding:5px 9px}@media(prefers-reduced-motion:reduce){:host-context(html:not([data-motion=\"on\"])) .ds-tag,:host-context(html:not([data-motion=\"on\"])) .ds-tag *{animation:none!important;transition:none!important}}:host-context(html[data-motion=\"off\"]) *,:host-context(html[data-motion=\"off\"]) *:before,:host-context(html[data-motion=\"off\"]) *:after{animation:none!important;transition:none!important}"
     },
     {
       "name": "Care choice",
       "kind": "input",
       "refersTo": "care-option",
-      "description": "Checkbox tile inverts when selected and rotates its plus.",
+      "description": "Checkbox tile inverts immediately, rotates its plus and draws a bottom rule; live direct changes add a 350ms compression.",
       "html": "<label class=\"ds-choice\"><input type=\"checkbox\"><span>Защитить кузов</span><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg></label>",
-      "css": ".ds-choice{position:relative;display:flex;align-items:center;justify-content:space-between;min-height:58px;padding:15px 16px;gap:10px;border:1px solid #ffffff65;background:var(--deep-red,#b60f1e);color:white;font:13px var(--body,Golos,sans-serif);cursor:pointer;transition:background .25s,border-color .25s}.ds-choice input{appearance:none;position:absolute;inset:0;width:100%;height:100%;margin:0;cursor:pointer;border-radius:0}.ds-choice svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.5;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-choice:has(input:checked){background:white;color:var(--deep-red,#b60f1e);border-color:white}.ds-choice:has(input:checked) svg{transform:rotate(45deg)}.ds-choice:hover{border-color:white;background:#ffffff15}.ds-choice:has(input:checked):hover{background:white}.ds-choice input:focus-visible{outline:2px solid white;outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-choice,.ds-choice *{animation:none!important;transition:none!important}}"
+      "css": ".ds-choice{position:relative;display:flex;align-items:center;justify-content:space-between;min-height:58px;padding:15px 16px;gap:10px;border:1px solid #ffffff65;background:var(--deep-red,#b60f1e);color:white;font:13px var(--body,Golos,sans-serif);cursor:pointer;isolation:isolate;overflow:hidden;transition:border-color .25s}.ds-choice input{appearance:none;position:absolute;inset:0;width:100%;height:100%;margin:0;cursor:pointer;border-radius:0}.ds-choice svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.5;transition:transform .4s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-choice:has(input:checked){background:white;color:var(--deep-red,#b60f1e);border-color:white}.ds-choice:has(input:checked) svg{transform:rotate(45deg)}.ds-choice:hover{border-color:white;background:#ffffff15}.ds-choice:has(input:checked):hover{background:white}.ds-choice input:focus-visible{outline:2px solid white;outline-offset:3px}@media(prefers-reduced-motion:reduce){:host-context(html:not([data-motion=\"on\"])) .ds-choice,:host-context(html:not([data-motion=\"on\"])) .ds-choice *{animation:none!important;transition:none!important}}.ds-choice:after{content:\"\";position:absolute;bottom:0;left:0;right:0;height:2px;pointer-events:none;background:white;transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-choice:has(input:checked):after{background:var(--deep-red,#b60f1e);transform:scaleX(1)}:host-context(html[data-motion=\"off\"]) *,:host-context(html[data-motion=\"off\"]) *:before,:host-context(html[data-motion=\"off\"]) *:after{animation:none!important;transition:none!important}"
     },
     {
       "name": "Vehicle field",
       "kind": "input",
       "description": "Transparent underlined text field on the red care surface.",
       "html": "<label class=\"ds-field\">Ваш автомобиль<input type=\"text\" placeholder=\"Марка и модель\"></label>",
-      "css": ".ds-field{display:block;padding:16px;background:var(--deep-red,#b60f1e);color:white;font:12px var(--body,Golos,sans-serif)}.ds-field input{display:block;width:100%;background:none;color:white;border:0;border-bottom:1px solid #ffffff80;border-radius:0;padding:15px 0 12px;font:15px var(--body,Golos,sans-serif);caret-color:white}.ds-field input::placeholder{color:#ffe1e5;opacity:1}.ds-field input:focus-visible{outline:2px solid white;outline-offset:3px}@media(max-width:600px){.ds-field input{font-size:16px}}@media(prefers-reduced-motion:reduce){.ds-field,.ds-field *{animation:none!important;transition:none!important}}"
+      "css": ".ds-field{display:block;padding:16px;background:var(--deep-red,#b60f1e);color:white;font:12px var(--body,Golos,sans-serif)}.ds-field input{display:block;width:100%;background:none;color:white;border:0;border-bottom:1px solid #ffffff80;border-radius:0;padding:15px 0 12px;font:15px var(--body,Golos,sans-serif);caret-color:white}.ds-field input::placeholder{color:#ffe1e5;opacity:1}.ds-field input:focus-visible{outline:2px solid white;outline-offset:3px}@media(max-width:600px){.ds-field input{font-size:16px}}@media(prefers-reduced-motion:reduce){:host-context(html:not([data-motion=\"on\"])) .ds-field,:host-context(html:not([data-motion=\"on\"])) .ds-field *{animation:none!important;transition:none!important}}:host-context(html[data-motion=\"off\"]) *,:host-context(html[data-motion=\"off\"]) *:before,:host-context(html[data-motion=\"off\"]) *:after{animation:none!important;transition:none!important}"
     },
     {
       "name": "Branch panel",
@@ -275,24 +334,31 @@
       "refersTo": "studio-panel",
       "description": "Flat silver-gray location panel with a clear address hierarchy.",
       "html": "<article class=\"ds-studio\"><p>Москва</p><h3>Олимпийский проспект,<br>16, строение 5</h3><a href=\"tel:+79104989211\">+7 (910) 498-92-11</a></article>",
-      "css": ".ds-studio{padding:42px;background:#dedfdd;color:var(--ink,#0c0d0f);border-radius:0;font-family:var(--body,Golos,sans-serif)}.ds-studio p{margin:0 0 26px;color:#5c5f61;font-size:12px}.ds-studio h3{margin:0;font:500 clamp(21px,2.15vw,32px)/1.45 var(--display,Unbounded,sans-serif);letter-spacing:-.025em}.ds-studio a{display:inline-block;margin-top:20px;font-size:19px;color:inherit;text-decoration:none}.ds-studio a:hover{text-decoration:underline;text-underline-offset:5px}.ds-studio a:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(max-width:1180px){.ds-studio{padding:32px}}@media(max-width:850px){.ds-studio{padding:30px}}@media(max-width:600px){.ds-studio{padding:27px 24px}.ds-studio h3{font-size:23px}.ds-studio a{font-size:18px}}@media(prefers-reduced-motion:reduce){.ds-studio,.ds-studio *{animation:none!important;transition:none!important}}"
+      "css": ".ds-studio{padding:42px;background:#dedfdd;color:var(--ink,#0c0d0f);border-radius:0;font-family:var(--body,Golos,sans-serif)}.ds-studio p{margin:0 0 26px;color:#5c5f61;font-size:12px}.ds-studio h3{margin:0;font:500 clamp(21px,2.15vw,32px)/1.45 var(--display,Unbounded,sans-serif);letter-spacing:-.025em}.ds-studio a{display:inline-block;margin-top:20px;font-size:19px;color:inherit;text-decoration:none}.ds-studio a:hover{text-decoration:underline;text-underline-offset:5px}.ds-studio a:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(max-width:1180px){.ds-studio{padding:32px}}@media(max-width:850px){.ds-studio{padding:30px}}@media(max-width:600px){.ds-studio{padding:27px 24px}.ds-studio h3{font-size:23px}.ds-studio a{font-size:18px}}@media(prefers-reduced-motion:reduce){:host-context(html:not([data-motion=\"on\"])) .ds-studio,:host-context(html:not([data-motion=\"on\"])) .ds-studio *{animation:none!important;transition:none!important}}:host-context(html[data-motion=\"off\"]) *,:host-context(html[data-motion=\"off\"]) *:before,:host-context(html[data-motion=\"off\"]) *:after{animation:none!important;transition:none!important}"
     },
     {
       "name": "FAQ disclosure",
       "kind": "custom",
-      "description": "Native ruled disclosure with a rotating plus indicator.",
+      "description": "Native ruled disclosure; live enhancement adds cancellable 360ms height/opacity expansion.",
       "html": "<details class=\"ds-faq\"><summary>Как узнать точную стоимость?<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg></summary><p>Напишите в выбранный филиал: укажите марку, модель и желаемые работы.</p></details>",
-      "css": ".ds-faq{background:var(--ink,#0c0d0f);color:var(--silver,#eeefed);border-top:1px solid var(--line,#343538);font-family:var(--body,Golos,sans-serif)}.ds-faq summary{display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:16px;padding:25px 0;cursor:pointer;list-style:none}.ds-faq summary::-webkit-details-marker{display:none}.ds-faq svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5;color:#b5b7ba;transition:transform .5s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-faq[open] svg{transform:rotate(45deg);color:#ee3747}.ds-faq p{margin:0;font-size:14px;color:#acafb2;line-height:1.8;padding-bottom:25px}.ds-faq summary:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(prefers-reduced-motion:reduce){.ds-faq,.ds-faq *{animation:none!important;transition:none!important}}"
+      "css": ".ds-faq{background:var(--ink,#0c0d0f);color:var(--silver,#eeefed);border-top:1px solid var(--line,#343538);font-family:var(--body,Golos,sans-serif)}.ds-faq summary{display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:16px;padding:25px 0;cursor:pointer;list-style:none}.ds-faq summary::-webkit-details-marker{display:none}.ds-faq svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5;color:#b5b7ba;transition:transform .5s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-faq[open] svg{transform:rotate(45deg);color:#ee3747}.ds-faq p{margin:0;font-size:14px;color:#acafb2;line-height:1.8;padding-bottom:25px}.ds-faq summary:focus-visible{outline:2px solid var(--red,#d71425);outline-offset:6px}@media(prefers-reduced-motion:reduce){:host-context(html:not([data-motion=\"on\"])) .ds-faq,:host-context(html:not([data-motion=\"on\"])) .ds-faq *{animation:none!important;transition:none!important}}:host-context(html[data-motion=\"off\"]) *,:host-context(html[data-motion=\"off\"]) *:before,:host-context(html[data-motion=\"off\"]) *:after{animation:none!important;transition:none!important}"
+    },
+    {
+      "name": "Inspection light control",
+      "kind": "input",
+      "description": "Native touch/keyboard range steers the photographic beam; hidden when the page motion setting is off.",
+      "html": "<div class=\"ds-light-control\"><label for=\"ds-light-range\">Проведите светом по кузову</label><input id=\"ds-light-range\" type=\"range\" min=\"0\" max=\"100\" value=\"38\" aria-label=\"Положение света на кузове\"><span>Свет раскрывает детали</span></div>",
+      "css": ".ds-light-control{width:240px;padding:13px 15px;background:#0c0d0fbf;border:1px solid #ffffff25;font:11px var(--body,Golos,sans-serif);color:#e6e7e7}.ds-light-control label,.ds-light-control span{display:block}.ds-light-control span{color:#bec1c4;margin-top:2px}.ds-light-control input{appearance:none;-webkit-appearance:none;touch-action:pan-y;display:block;width:100%;height:25px;margin:8px 0 0;background:transparent;cursor:ew-resize;accent-color:var(--red,#d71425)}.ds-light-control input::-webkit-slider-runnable-track{height:2px;background:linear-gradient(90deg,#6f7276,var(--red,#d71425),#6f7276)}.ds-light-control input::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:3px solid #f5f5f4;border-radius:50%;background:var(--red,#d71425);margin-top:-8px;box-shadow:0 2px 8px #0008}.ds-light-control input::-moz-range-track{height:2px;background:#85878b}.ds-light-control input::-moz-range-thumb{width:13px;height:13px;border:3px solid #f5f5f4;border-radius:50%;background:var(--red,#d71425)}.ds-light-control input:focus-visible{outline:2px solid white;outline-offset:5px}@media(max-width:600px){.ds-light-control{width:auto;display:grid;grid-template-columns:1fr 110px;gap:12px;padding:10px 12px}.ds-light-control input{margin:0;height:34px}.ds-light-control span{display:none}}:host-context(html[data-motion=\"off\"]) .ds-light-control{display:none}@media(prefers-reduced-motion:reduce){:host-context(html:not([data-motion=\"on\"])) .ds-light-control{display:none}}"
     }
   ],
   "narrative": {
     "northStar": "The Light Tunnel",
-    "overview": "The Light Tunnel translates the supplied black, red and silver shield into a dark automotive studio: broad engineered lettering, a single illuminated automobile, precise rules and squared controls. Large silver service and branch surfaces interrupt the black ground; saturated red fields give the care form and final invitation their own visual weight.\n\nThe built system is flat and deliberate. Light lives inside imagery and its masking layers, while interface states use a red stroke, an underline, a small directional movement or an inverted surface. Russian body copy stays sober and readable beside the wide display face. Generated automotive illustrations remain visibly identified until authentic client photography is supplied.",
+    "overview": "The Light Tunnel translates the supplied black, red and silver shield into a dark automotive studio: broad engineered lettering, a single illuminated automobile, precise rules and squared controls. Large silver service and branch surfaces interrupt the black ground; saturated red fields give the care form and final invitation their own visual weight.\n\nThe built system is flat and deliberate. A scroll-directed photographic inspection pass moves light and camera framing on desktop and mobile, while interface states use a red stroke, an underline, directional movement or an inverted surface. A finite entrance introduces the mechanism; subsequent continuous movement follows visitor input. Russian body copy stays sober and readable beside the wide display face. Generated automotive illustrations remain visibly identified until authentic client photography is supplied.",
     "keyCharacteristics": [
       "Black studio ground with silver reading surfaces and branded red fields.",
       "Wide Unbounded headings paired with compact Golos text.",
       "Squared controls, fine rules and flat tonal layers.",
-      "Image-bound light, restrained directional motion and a reduced-motion alternative."
+      "Image-bound light and camera movement on desktop and mobile, with an explicit motion control and a reduced-motion alternative."
     ],
     "rules": [
       {
@@ -307,20 +373,22 @@
       },
       {
         "name": "The Light Within Rule",
-        "body": "Keep the light reveal and photographic gradients inside image composition; interface surfaces use tonal separation and fine rules rather than box shadows.",
+        "body": "Keep the light reveal and photographic gradients inside image composition; content surfaces use tonal separation and fine rules. Reserve the existing local shadows for the inspection beam, range thumb and compact navigation overlay.",
         "section": "elevation"
       }
     ],
     "dos": [
       "Do preserve the supplied shield, black/red/silver identity and two-font relationship.",
       "Do retain square controls, visible keyboard focus and explicit selected states.",
-      "Do preserve the responsive tab orientation, scrollable mobile choices and reduced-motion behavior.",
+      "Do preserve responsive tab orientation, scrollable mobile choices and meaningful touch/keyboard motion controls on mobile.",
+      "Do honor system reduced motion by default, allow explicit motion opt-in, and settle interrupted interactions to their requested state.",
       "Do label generated illustrations visibly and preserve their provenance when replacing or reusing imagery."
     ],
     "donts": [
       "Don't present generated illustrations as completed client work.",
       "Don't substitute rounded pill controls or floating shadow cards for the built squared, flat components.",
-      "Don't make pointer-following light or animation necessary to read content or complete a contact request."
+      "Don't make photographic light or animation necessary to read content or complete a contact request.",
+      "Don't loop the hero inspection or leave hidden contact controls keyboard-accessible."
     ]
   }
 }

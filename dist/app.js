@@ -21,7 +21,7 @@ function whatsappUrl(city, message) { return `https://wa.me/${branches[city].pho
 function genericMessage() { return `Здравствуйте, Iron Horse! Хочу обсудить уход за автомобилем в филиале ${branches[currentCity].name}. Подскажите, пожалуйста, доступные услуги и время для консультации.`; }
 function setMultiline(node, lines) { node.replaceChildren(); lines.forEach((line, i) => { if (i) node.append(document.createElement('br')); node.append(document.createTextNode(line)); }); }
 function refreshLinks() { $$('.wa-link').forEach(link => { link.href = whatsappUrl(currentCity, genericMessage()); }); }
-function animatePanel(node) { if (reducedMotion.matches) return; node.classList.remove('panel-change'); void node.offsetWidth; node.classList.add('panel-change'); }
+function animatePanel(node) { if (window.IHMotion) { window.IHMotion.panel(node); return; } if (reducedMotion.matches) return; node.classList.remove('panel-change'); void node.offsetWidth; node.classList.add('panel-change'); }
 function setCity(city, animate = true) {
   if (!branches[city]) return;
   currentCity = city;
@@ -47,11 +47,12 @@ function setService(key, moveFocus = false) {
   setMultiline($('#service-title'), service.title);
   $('#service-description').textContent = service.description;
   $('#service-tags').replaceChildren(...service.tags.map(text => { const li = document.createElement('li'); li.textContent = text; return li; }));
-  const picture = $('#service-image'); picture.src = `assets/${service.image}`; picture.alt = service.alt;
+  const picture = $('#service-image'); window.IHMotion?.picture(picture); picture.src = `assets/${service.image}`; picture.alt = service.alt;
   picture.style.objectPosition = key === 'tint' ? '78% 35%' : key === 'interior' ? '77% 47%' : 'center 60%';
   $('#service-visual-label').textContent = service.visual;
   $('.service-request').firstChild.textContent = 'Добавить к подбору ';
   animatePanel($('.service-details'));
+  if (mobileQuery.matches) { const tab = $(`#tab-${key}`); const list = $('.service-tabs'); list.scrollTo({ left: Math.max(0, tab.offsetLeft - list.offsetLeft - 12), behavior: window.IHMotion?.enabled ? 'smooth' : 'auto' }); }
   if (moveFocus) $(`#tab-${key}`).focus();
 }
 function wireTabs(containerSelector, itemSelector, valueKey, callback) {
@@ -88,20 +89,16 @@ $('#care-form').addEventListener('submit', event => {
   const link = document.createElement('a'); link.href = whatsappUrl(currentCity, message); link.target = '_blank'; link.rel = 'noopener noreferrer'; document.body.append(link); link.click(); link.remove();
 });
 const menuButton = $('.menu-toggle');
-function closeMenu() { menuButton.setAttribute('aria-expanded', 'false'); menuButton.setAttribute('aria-label','Открыть меню'); $('#mobile-nav').hidden = true; }
-menuButton.addEventListener('click', () => { const open = menuButton.getAttribute('aria-expanded') !== 'true'; menuButton.setAttribute('aria-expanded', String(open)); menuButton.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню'); $('#mobile-nav').hidden = !open; });
+function setMenu(open) { menuButton.setAttribute('aria-expanded', String(open)); menuButton.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню'); if(window.IHMotion) window.IHMotion.menu(open); else $('#mobile-nav').hidden = !open; }
+function closeMenu() { setMenu(false); }
+menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
 $$('#mobile-nav a').forEach(link => link.addEventListener('click', closeMenu));
+$('.skip').addEventListener('click', closeMenu);
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && !$('#mobile-nav').hidden) { closeMenu(); menuButton.focus(); } });
 document.addEventListener('click', event => { if (!$('#mobile-nav').hidden && !event.target.closest('#mobile-nav, .menu-toggle')) closeMenu(); });
 const mobileQuery = window.matchMedia('(max-width: 600px)');
 function updateOrientation() { $('.service-tabs').setAttribute('aria-orientation', mobileQuery.matches ? 'horizontal' : 'vertical'); $('.studio-tabs').setAttribute('aria-orientation', mobileQuery.matches ? 'horizontal' : 'vertical'); if (window.innerWidth > 850) closeMenu(); }
 window.addEventListener('resize', updateOrientation, { passive: true });
 updateOrientation();
-const hero = $('.hero');
-let lightFrame;
-hero.addEventListener('pointermove', event => { if (reducedMotion.matches || event.pointerType === 'touch') return; if (lightFrame) return; lightFrame = requestAnimationFrame(() => { const rect = hero.getBoundingClientRect(); hero.style.setProperty('--light-x',`${event.clientX - rect.left}px`); hero.style.setProperty('--light-y',`${event.clientY - rect.top}px`); hero.classList.add('light-active'); lightFrame = null; }); });
-hero.addEventListener('pointerleave', () => hero.classList.remove('light-active'));
-const bottom = $('.mobile-bottom');
-if ('IntersectionObserver' in window) { const observer = new IntersectionObserver(entries => { bottom.classList.toggle('at-start', entries[0].isIntersecting); }, {threshold:.15}); observer.observe(hero); }
 $('#year').textContent = new Date().getFullYear();
 setCity('moscow', false);

@@ -33,3 +33,11 @@ Browser checks completed at 320, 390, 1280 and 1440 px: no horizontal overflow, 
 ## Hosting
 
 `.openai/hosting.json` records the private Sites project and static output directory. There is no build step. Deploy only the matching pushed source commit and its `.openai/hosting.json` + `dist/` archive. The packaged archive excludes product/design development context.
+
+## Motion revision
+
+`dist/motion.css` and `dist/motion.js` add the scroll-directed Light Tunnel inspection pass on desktop and mobile. The same photographic beam is driven by scroll, touch and a keyboard-operable range control. A finite entrance, service crossfades, line entrances, compact-navigation reveal, checkbox feedback and FAQ expansion complement the focal scene. Rendering is event-driven; the application has no idle requestAnimationFrame loop.
+
+System reduced motion defaults to a quiet static layout. The visible motion control allows an explicit override; disabling movement cancels tracked transitions and settles disclosures. Background-tab visibility pauses tracked Web Animations. The compact menu makes main/footer/fixed actions inert, and its short-screen layout keeps every destination reachable.
+
+Normal-motion QA covers 320×720, 390×844, 568×320, 768×1024, 1280×800 and 1440×1000, including touch scroll, light range keyboard input, rapid repeated transitions, runtime reduced-motion changes, menu Escape/resize, FAQ interruption and the existing WhatsApp flow. Independent visual/motion and technical reviews were completed. Two menu defects found in technical review were fixed and independently rechecked.
