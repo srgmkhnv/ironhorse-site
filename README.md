@@ -11,7 +11,7 @@ Russian-language presentation site for Iron Horse detailing studios in Moscow, M
 - `dist/app.js`: branch names, addresses, phone numbers and map links in `branches`; service descriptions in `services`.
 - `dist/index.html`: initial content, navigation, care choices and FAQ. Keep no-JavaScript initial content aligned with app.js.
 - `dist/styles.css`: responsive layout, design variables, local fonts and motion. Reduced-motion preferences are supported.
-- `dist/assets/hero.webp` and `craft.webp`: generated illustrative photographs, visibly labelled as staged images on the page. Replace with owner-supplied photographs and accurate alt text when available. They are not presented as completed Iron Horse projects. JSON sidecars retain generation provenance.
+- `dist/assets/photos/`: nine AI-regenerated owner photographs, each with a full-size WebP, responsive 640px version and JSON provenance. The hero uses photo-04; gallery includes every image. Original source photographs are retained outside the deployment at /workspace/ironhorse-sources, and native generated PNGs remain under /workspace/generated_images. Retouching and background replacement are explicitly disclosed; the replacement backdrop is not represented as the actual premises.
 - `dist/assets/shield.png`: the authentic shield extracted from the owner's supplied PDF.
 
 The care form stores no data and opens WhatsApp with an editable enquiry. Nothing is sent automatically. City selection updates all general enquiry links, contact panel and care city. No analytics, cookies or external font CDNs are used.
@@ -41,3 +41,12 @@ Browser checks completed at 320, 390, 1280 and 1440 px: no horizontal overflow, 
 System reduced motion defaults to a quiet static layout. The visible motion control allows an explicit override; disabling movement cancels tracked transitions and settles disclosures. Background-tab visibility pauses tracked Web Animations. The compact menu makes main/footer/fixed actions inert, and its short-screen layout keeps every destination reachable.
 
 Normal-motion QA covers 320×720, 390×844, 568×320, 768×1024, 1280×800 and 1440×1000, including touch scroll, light range keyboard input, rapid repeated transitions, runtime reduced-motion changes, menu Escape/resize, FAQ interruption and the existing WhatsApp flow. Independent visual/motion and technical reviews were completed. Two menu defects found in technical review were fixed and independently rechecked.
+
+
+## Owner photo integration
+
+The owner supplied nine photographs and requested high-quality regeneration, removal of buildings/clutter and website placement. Each reference was edited with the image-generation tool. Recognizable vehicle colors, finishes and body identity anchor the edits; studio backgrounds, reflections and peripheral details were regenerated. The previous purely illustrative hero/process delivery assets were retired. No per-service results, before/after claims or customer identities were added.
+
+`dist/gallery.js` / `gallery.css` provide the native horizontal photo rail and modal viewer. Photos can be opened with a pointer or keyboard, switched with arrows, swiped on touch, closed with Escape, and downloaded. Native dialog focus trapping and return to the originating image are preserved. Images stay hidden during loading, a live status reports loading/failure, and a request counter prevents stale decode callbacks from replacing newer selections. Runtime reduced-motion changes cancel the viewer transition.
+
+Normal and reduced-motion QA covered six viewport sizes, all nine full-size image loads, carousel bounds/keyboard, viewer wraparound/rapid changes, Escape and focus return, existing mobile navigation, hero scroll transforms and the selected-city WhatsApp flow. The high-resolution PNG archive is available at /workspace/iron-horse-photos-highres.zip; it is deliberately outside the deployment archive.

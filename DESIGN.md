@@ -84,6 +84,12 @@ components:
     backgroundColor: "{colors.panel}"
     textColor: "{colors.silver}"
     rounded: "{rounded.square}"
+  photo-control:
+    textColor: "{colors.silver}"
+    rounded: "{rounded.square}"
+    padding: "10px"
+    height: "46px"
+    width: "46px"
   studio-panel:
     backgroundColor: "#dedfdd"
     textColor: "{colors.ink}"
@@ -99,13 +105,14 @@ components:
 
 The Light Tunnel translates the supplied black, red and silver shield into a dark automotive studio: broad engineered lettering, a single illuminated automobile, precise rules and squared controls. Large silver service and branch surfaces interrupt the black ground; saturated red fields give the care form and final invitation their own visual weight.
 
-The built system is flat and deliberate. A scroll-directed photographic inspection pass moves light and camera framing on desktop and mobile, while interface states use a red stroke, an underline, directional movement or an inverted surface. A finite entrance introduces the mechanism; subsequent continuous movement follows visitor input. Russian body copy stays sober and readable beside the wide display face. Generated automotive illustrations remain visibly identified until authentic client photography is supplied.
+The built system is flat and deliberate. A scroll-directed photographic inspection pass moves light and camera framing on desktop and mobile, while interface states use a red stroke, an underline, directional movement or an inverted surface. A finite entrance introduces the mechanism; subsequent continuous movement follows visitor input. Russian body copy stays sober and readable beside the wide display face. The current photographs are AI-regenerated from nine owner-supplied vehicle images: retouching removes clutter and replaces building backgrounds with studio settings. Visible disclosures identify the edits; photographic color and finish remain image content rather than new UI accents. The purple BMW with gold wheels anchors the hero, and the same owner series supplies service, approach and gallery imagery.
 
 **Key Characteristics:**
 - Black studio ground with silver reading surfaces and branded red fields.
 - Wide Unbounded headings paired with compact Golos text.
 - Squared controls, fine rules and flat tonal layers.
 - Image-bound light and camera movement on desktop and mobile, with an explicit motion control and a reduced-motion alternative.
+- Owner-supplied vehicle imagery with visible AI-retouching disclosures, native gallery scrolling and a full-photo viewer.
 
 ## Colors
 
@@ -151,6 +158,8 @@ Service and branch explorers use unequal two-column grids (.8fr / 1.2fr) with a 
 At up to (1180px), split gaps tighten, branch padding becomes (32px), header contact and hero city list disappear. At up to (850px), the header becomes (82px), desktop links become a toggle and full-height compact menu, section padding becomes (80px), care stacks into one column and the closing band stacks; explorers and FAQ still retain two columns.
 
 At up to (600px), the gutter is (22px), header (76px), and section padding (65px). Service and branch explorers, approach, FAQ and form fields become single-column. Service tabs become horizontally scrollable bordered choices; branch tabs become a horizontal underlined row. Care options remain two columns. Hero image framing shifts below its text; height is `calc(100svh - 76px)` with a (640px) minimum, reducing to (630px) up to (360px). Enabled inspection travel is (65svh), with a visible touch/keyboard light control above the bottom disclosure. At viewport heights up to (650px), the enabled hero becomes a non-sticky (740px) section and the extra inspection travel is removed. A fixed bottom city/contact bar appears near the end of the hero story; safe-area inset is included in its padding and the footer reserves (100px) below. This bar is inert while hidden or while the compact menu is open. No content needs the photographic light to remain visible.
+
+The photographic gallery uses native horizontal scrolling with snap-to-start cards: three columns with (24px) gaps, two with (20px) gaps at up to (1000px), and (82%) card widths with (16px) gaps at up to (600px). The narrow layout deliberately shows the next card edge. Portrait card frames use a (2:3) ratio and cropped images; the viewer uses `object-fit: contain` to show the entire edited photograph. Its desktop dialog is bounded by `min(1240px,96vw)` width and `min(950px,95dvh)` height, with a full-viewport, safe-area-aware layout at up to (600px).
 
 ## Elevation & Depth
 
@@ -202,6 +211,14 @@ Squared checkbox tiles sit in a two-column grid with (10px) gaps, reducing to (8
 
 FAQ rows retain native details/summary semantics, one-pixel rules and a plus SVG that rotates (45deg) over (.5s). Enhanced expansion measures the answer wrapper and animates height/opacity over (360ms). Repeated activation cancels the previous transition and starts from the current height; disabling motion settles the requested expanded state immediately.
 
+### Owner photo gallery and viewer
+
+The photographic series extends the existing dark studio framing with square image buttons, restrained captions and fine outlined controls. Gallery captions use (13px), reducing to (12px) on mobile; the gallery disclosure stays at (12px) with line height (1.7). The disclosure states that the images derive from Iron Horse photographs and that AI retouching replaced backgrounds and removed objects. The viewer repeats the background-replacement note. Service and hero disclosures identify AI retouching; captions describe vehicles, color and framing without claiming a performed service or result.
+
+The rail remains a native scroll region with a thin scrollbar and visible keyboard focus. Previous/next controls move one card and disable at their bounds; a live position label reports the visible range. Arrow keys, Home and End operate when the rail itself has focus. Each photograph button opens a native modal dialog. The close button receives focus; Escape, close and an outside-backdrop click dismiss it and return focus to the opening photograph. Viewer arrow keys, buttons and horizontal touch swipes navigate the series with wraparound; vertical scrolling and pinch zoom remain available. A download link always points to the selected full-size edited file.
+
+Full-size images stay hidden until decoding completes. A request counter prevents an older decode from displaying a stale selection; closing invalidates pending completion. Loading and error states use a live status message. The rail uses smooth scrolling only when the shared motion setting permits it. Image hover enlarges by (1.035) over (800ms); decoded viewer images enter from (.35) opacity and (1.025) scale over (380ms) when motion is enabled. The rail and viewer controls are (46px) square, reducing to (44px) in the mobile viewer; hover adds a red border and subtle tonal background. Preserve full-photo containment and the disclosure when extending this pattern.
+
 ### Photographic inspection and motion control
 
 The shared easing is `cubic-bezier(.16,1,.3,1)`. The finite hero entrance reveals heading, prose and actions over (900ms), staggered by (90ms), with a (1500ms) camera move and one (2400ms) light pass. Scroll cancels the introductory camera/light movement and takes over: the beam traverses (20–85%), the camera scales by up to (1.12) on desktop or (1.16) on mobile, and the text shifts upward while retaining at least (.55) opacity. The hero progress line and horizontal brand band track scroll distance; neither loops. Multi-line section headings reveal once over (750ms), staggered by (75ms).
@@ -217,10 +234,11 @@ The visible motion button turns the complete motion system off immediately: runn
 - **Do** retain square controls, visible keyboard focus and explicit selected states.
 - **Do** preserve responsive tab orientation, scrollable mobile choices and meaningful touch/keyboard motion controls on mobile.
 - **Do** honor system reduced motion by default, allow explicit motion opt-in, and settle interrupted interactions to their requested state.
-- **Do** label generated illustrations visibly and preserve their provenance when replacing or reusing imagery.
+- **Do** visibly disclose AI retouching and background replacement on owner-derived photographs and preserve their source provenance.
+- **Do** retain native gallery scrolling, visible bounded rail controls, full-image containment and keyboard/touch access in the viewer.
 
 ### Don't:
-- **Don't** present generated illustrations as completed client work.
+- **Don't** present edited imagery as proof of specific completed services or imply that a replaced studio background depicts the actual premises.
 - **Don't** substitute rounded pill controls or floating shadow cards for the built squared, flat components.
 - **Don't** make photographic light or animation necessary to read content or complete a contact request.
 - **Don't** loop the hero inspection or leave hidden contact controls keyboard-accessible.
