@@ -72,7 +72,9 @@
   height:44px;
   display:grid;
   place-items:center;
-  background:#151618
+  background:#151618;
+  border:1px solid #ffffff40;
+  border-radius:var(--radius-small)
 }
 .photo-enlarge svg {
   height:18px;
@@ -106,22 +108,25 @@
   padding:12px;
   background:#292b2f;
   color:var(--silver);
-  border:0
+  border:1px solid var(--control-line);
+  border-radius:var(--radius);
+  transition:background var(--duration),border-color var(--duration),transform var(--duration)
 }
 .gallery-navigation button:hover,.photo-viewer button:hover {
-  background:#3c3f44
+  background:#3c3f44;
+  border-color:#777a82
 }
 .gallery-navigation button:disabled {
+  background:transparent;
+  border-color:var(--control-line);
   opacity:.35;
   cursor:default
 }
 .gallery-prev svg,#photo-prev svg {
-  transform:rotate(225deg);
   width:18px;
   height:18px
 }
 .gallery-next svg,#photo-next svg {
-  transform:rotate(45deg);
   width:18px;
   height:18px
 }
@@ -138,6 +143,7 @@ html.photo-viewing {
   color:var(--silver);
   border:0;
   overflow:hidden;
+  border-radius:var(--radius);
   grid-template-rows:auto minmax(0,1fr) auto;
   gap:16px
 }
@@ -161,7 +167,6 @@ html.photo-viewing {
   letter-spacing:0
 }
 .photo-viewer-top button svg {
-  transform:rotate(45deg);
   width:22px;
   height:22px
 }
@@ -262,6 +267,7 @@ html.photo-viewing {
     height:100dvh;
     max-height:100dvh;
     margin:0;
+    border-radius:0;
     padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));
     gap:14px
   }
