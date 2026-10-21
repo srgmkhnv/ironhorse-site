@@ -9,7 +9,13 @@ npm start
 npm run check
 ```
 
-The preview runs at http://localhost:3000. Deploy only `dist/`. `.openai/hosting.json` retains the existing hosting project; this UI revision does not publish a deployment.
+The preview runs at http://localhost:3000. Deploy only `dist/`. `.openai/hosting.json` retains the separate existing hosting project.
+
+## GitHub Pages
+
+`.github/workflows/pages.yml` validates production JavaScript and publishes only `dist/` after changes merge into `main`. Pull requests validate/package the site without deploying. Manual runs are also available from Actions → Deploy GitHub Pages.
+
+The repository's Settings → Pages → Build and deployment → Source must be **GitHub Actions**. GitHub requires an eligible plan for Pages from a private repository. The workflow does not change repository visibility or require a personal token. The default project address is `https://srgmkhnv.github.io/ironhorse-site/`; use the deployment's environment URL as the actual address once a deployment succeeds. All site asset URLs are relative so the project subdirectory is supported.
 
 ## Interface
 
