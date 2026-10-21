@@ -17,6 +17,10 @@ The preview runs at http://localhost:3000. Deploy only `dist/`. `.openai/hosting
 
 The repository's Settings → Pages → Build and deployment → Source must be **GitHub Actions**. GitHub requires an eligible plan for Pages from a private repository. The workflow does not change repository visibility or require a personal token. The default project address is `https://srgmkhnv.github.io/ironhorse-site/`; use the deployment's environment URL as the actual address once a deployment succeeds. All site asset URLs are relative so the project subdirectory is supported.
 
+A ready-to-publish static snapshot is also available on the `gh-pages` branch, with `index.html` at the root and `.nojekyll`. To publish that snapshot directly, set Settings → Pages → Source to **Deploy from a branch**, select **gh-pages / (root)** and save. This source publishes commits to `gh-pages`; it does not automatically copy subsequent changes from `main`.
+
+Publication attempt on 2026-10-21: the UI/motion changes and deployment workflow are merged into `main`. All 664 local browser assertions pass with the `/ironhorse-site/` project prefix. GitHub Actions run [39617756328](https://github.com/srgmkhnv/ironhorse-site/actions/runs/39617756328) failed before assigning a runner or executing any build step; publication was skipped. The connected integration cannot read the check annotations or change Pages settings. A successful public deployment has not been verified.
+
 ## Interface
 
 - The opening restores the original large automotive photograph and restrained black/red/silver composition. It clearly names detailing and leads directly to the selected branch's WhatsApp. The exact wordmark appears in the header and footer; no repeated hero logo or shield-shaped surfaces remain.
