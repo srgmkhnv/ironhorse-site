@@ -145,25 +145,32 @@ function updateCare() {
   const selected = Object.keys(services).filter(key => state.selected.has(key));
   const list = $('#care-selected');
   const focusedKey = document.activeElement?.dataset.removeService;
-  list.replaceChildren();
-  if (!selected.length) {
-    const item = document.createElement('li');
-    item.className = 'care-empty';
-    item.textContent = 'Консультация по подбору ухода';
-    list.append(item);
-  }
-  selected.forEach(key => {
-    const item = document.createElement('li');
-    const label = document.createElement('span');
-    label.textContent = services[key].name;
-    const remove = document.createElement('button');
-    remove.type = 'button';
-    remove.dataset.removeService = key;
-    remove.setAttribute('aria-label', `Убрать: ${services[key].name}`);
-    remove.innerHTML = '<svg aria-hidden="true"><use href="#plus"/></svg>';
-    item.append(label, remove);
-    list.append(item);
-  });
+  const paintList = () => {
+    const existing = new Map([...list.children].map(item => [item.dataset.serviceKey || 'empty', item]));
+    const keys = selected.length ? selected : ['empty'];
+    const items = keys.map(key => {
+      if (existing.has(key)) return existing.get(key);
+      const item = document.createElement('li');
+      item.dataset.serviceKey = key;
+      if (key === 'empty') {
+        item.className = 'care-empty';
+        item.textContent = 'Консультация по подбору ухода';
+        return item;
+      }
+      const label = document.createElement('span');
+      label.textContent = services[key].name;
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.dataset.removeService = key;
+      remove.setAttribute('aria-label', `Убрать: ${services[key].name}`);
+      remove.innerHTML = '<svg aria-hidden="true"><use href="#close"/></svg>';
+      item.append(label, remove);
+      return item;
+    });
+    list.replaceChildren(...items);
+  };
+  if (window.IHMotion) window.IHMotion.care(list, paintList);
+  else paintList();
   $$('[data-care-service]').forEach(input => { input.checked = state.selected.has(input.dataset.careService); });
   $('#care-car').textContent = state.car || 'Обсудим со специалистом';
   $('#care-branch').textContent = `${branches[state.city].name} · ${branchAddress(branches[state.city])}`;
@@ -171,7 +178,8 @@ function updateCare() {
   $('#care-summary').textContent = selected.length ? `Выбрано услуг: ${selected.length}. ${selected.map(key => services[key].name).join(', ')}` : 'Консультация по подбору ухода';
   $$('.service-request').forEach(link => {
     const added = state.selected.has(link.dataset.addService);
-    link.firstChild.textContent = added ? 'Добавлено к подбору ' : 'Добавить к подбору ';
+    link.firstChild.textContent = added ? 'Добавлено в план ' : 'Добавить к подбору ';
+    link.dataset.added = String(added);
     link.querySelector('use').setAttribute('href', added ? '#check' : '#plus');
   });
   // Removing a focused button must leave focus on a useful, visible control.
@@ -186,14 +194,15 @@ function setCity(city, animate = true) {
   const branch = branches[city];
   $('#header-city-name').textContent = branch.name;
   $('#header-city').setAttribute('aria-label', `Выберите город. Текущий город: ${branch.name}`);
-  $$('[data-header-city]').forEach(option => {
-    const active = option.dataset.headerCity === city;
+  $$('[data-header-city], [data-care-city-choice]').forEach(option => {
+    const active = (option.dataset.headerCity || option.dataset.careCityChoice) === city;
     option.setAttribute('aria-selected', String(active));
     option.tabIndex = active ? 0 : -1;
   });
   $('#hero-city').textContent = branch.name;
   $('#mobile-city').textContent = branch.name;
   $('#care-city').value = city;
+  $('#care-city-name').textContent = branch.name;
   $('#studio-city').textContent = branch.name;
   $('#studio-address').textContent = branchAddress(branch);
   $('#studio-phone').textContent = branch.display;
@@ -214,7 +223,7 @@ function paintServices() {
   serviceButtons.forEach(button => {
     const active = button.dataset.service === state.service;
     const panel = $(`#service-${button.dataset.service}`);
-    button.querySelector('use').setAttribute('href', compactServices.matches ? '#chevron' : '#arrow');
+    button.querySelector('use').setAttribute('href', compactServices.matches ? '#chevron' : '#next');
     if (compactServices.matches) {
       button.removeAttribute('role');
       button.removeAttribute('aria-selected');
@@ -237,13 +246,16 @@ function paintServices() {
 }
 function setService(key, toggle = false) {
   if (!services[key]) return;
-  state.expanded = compactServices.matches && toggle && state.service === key ? !state.expanded : true;
-  state.service = key;
-  paintServices();
-  const panel = $(`#service-${key}`);
-  if (!panel.hidden) animatePanel(panel.querySelector('.service-details'));
+  const update = () => {
+    state.expanded = compactServices.matches && toggle && state.service === key ? !state.expanded : true;
+    state.service = key;
+    paintServices();
+  };
+  if (window.IHMotion) window.IHMotion.services(update, compactServices.matches);
+  else update();
 }
 function layoutServices() {
+  window.IHMotion?.finishServices();
   const focused = document.activeElement;
   const activePanel = focused?.closest('.service-panel');
   if (activePanel) { state.service = activePanel.id.slice('service-'.length); state.expanded = true; }
@@ -305,39 +317,110 @@ $('#care-form').addEventListener('submit', event => {
   link.remove();
 });
 
-const cityTrigger = $('#header-city');
-const cityOptions = $('#city-options');
+const cityPickers = $$('.city-picker').map(root => ({
+  root,
+  trigger: root.querySelector('.city-trigger'),
+  dialog: root.querySelector('.city-popover'),
+  list: root.querySelector('.city-options'),
+  options: [...root.querySelectorAll('[role="option"]')]
+}));
+let activeCityPicker = null;
+function positionCity(picker) {
+  picker.dialog.removeAttribute('style');
+  if (mobile.matches) return;
+  const bounds = picker.trigger.getBoundingClientRect();
+  const gap = 10;
+  const edge = 16;
+  const width = picker.dialog.offsetWidth;
+  const below = innerHeight - bounds.bottom - gap - edge;
+  const above = bounds.top - gap - edge;
+  const height = picker.dialog.scrollHeight + 2;
+  const opensAbove = below < height && above > below;
+  const available = Math.max(80, opensAbove ? above : below);
+  Object.assign(picker.dialog.style, {
+    position: 'fixed',
+    left: `${Math.max(edge, Math.min(bounds.right - width, innerWidth - width - edge))}px`,
+    right: 'auto',
+    top: `${opensAbove ? bounds.top - gap - Math.min(height, available) : bounds.bottom + gap}px`,
+    bottom: 'auto',
+    maxHeight: `${available}px`
+  });
+}
 function closeCity(returnFocus = false) {
-  cityOptions.hidden = true;
-  cityTrigger.setAttribute('aria-expanded', 'false');
-  if (returnFocus) cityTrigger.focus({ preventScroll: true });
+  const picker = activeCityPicker;
+  if (!picker) return;
+  activeCityPicker = null;
+  picker.list.hidden = true;
+  picker.trigger.setAttribute('aria-expanded', 'false');
+  picker.dialog.close();
+  document.documentElement.classList.remove('city-selecting');
+  if (returnFocus) picker.trigger.focus({ preventScroll: true });
 }
-function openCity() {
+function openCity(picker) {
+  closeCity();
   if (!$('#mobile-nav').hidden) closeMenu();
-  cityOptions.hidden = false;
-  cityTrigger.setAttribute('aria-expanded', 'true');
-  cityOptions.querySelector('[aria-selected="true"]').focus();
+  activeCityPicker = picker;
+  picker.list.hidden = false;
+  picker.trigger.setAttribute('aria-expanded', 'true');
+  picker.dialog.removeAttribute('style');
+  if (mobile.matches) {
+    picker.dialog.showModal();
+    document.documentElement.classList.add('city-selecting');
+  } else picker.dialog.show();
+  positionCity(picker);
+  picker.list.querySelector('[aria-selected="true"]').focus({ preventScroll: true });
 }
-cityTrigger.addEventListener('click', () => cityOptions.hidden ? openCity() : closeCity());
-cityTrigger.addEventListener('keydown', event => {
-  if (['ArrowDown', 'ArrowUp'].includes(event.key)) { event.preventDefault(); openCity(); }
+cityPickers.forEach(picker => {
+  picker.trigger.addEventListener('click', () => activeCityPicker === picker ? closeCity() : openCity(picker));
+  picker.trigger.addEventListener('keydown', event => {
+    if (['ArrowDown', 'ArrowUp'].includes(event.key)) { event.preventDefault(); openCity(picker); }
+  });
+  picker.options.forEach(option => option.addEventListener('click', () => {
+    setCity(option.dataset.headerCity || option.dataset.careCityChoice);
+    closeCity(true);
+  }));
+  picker.list.addEventListener('keydown', event => {
+    const index = picker.options.indexOf(document.activeElement);
+    if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? picker.options.length - 1 : (index + (event.key === 'ArrowDown' ? 1 : -1) + picker.options.length) % picker.options.length;
+      picker.options[next].focus();
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      picker.options[index]?.click();
+    } else if (event.key === 'Tab') closeCity(true);
+  });
+  picker.dialog.querySelector('[data-close-city]').addEventListener('click', () => closeCity(true));
+  picker.dialog.addEventListener('keydown', event => {
+    if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); closeCity(true); }
+  });
+  picker.dialog.addEventListener('cancel', event => { event.preventDefault(); closeCity(true); });
+  picker.dialog.addEventListener('click', event => {
+    if (event.target !== picker.dialog) return;
+    const bounds = picker.dialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeCity(true);
+  });
+  picker.dialog.addEventListener('close', () => {
+    // An earlier queued close event must not close a newly reopened picker.
+    if (picker.dialog.open || activeCityPicker !== picker) return;
+    closeCity();
+  });
 });
-$$('[data-header-city]').forEach(option => option.addEventListener('click', () => { setCity(option.dataset.headerCity); closeCity(true); }));
-cityOptions.addEventListener('keydown', event => {
-  const options = $$('[data-header-city]');
-  const index = options.indexOf(document.activeElement);
-  if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
-    event.preventDefault();
-    const next = event.key === 'Home' ? 0 : event.key === 'End' ? options.length - 1 : (index + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
-    options[next].focus();
-  } else if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    options[index]?.click();
-  } else if (event.key === 'Tab') closeCity(true);
-  else if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); closeCity(true); }
+document.addEventListener('pointerdown', event => {
+  if (activeCityPicker && !activeCityPicker.root.contains(event.target)) closeCity();
 });
-document.addEventListener('pointerdown', event => { if (!event.target.closest('.city-picker')) closeCity(); });
-document.addEventListener('focusin', event => { if (!event.target.closest('.city-picker')) closeCity(); });
+document.addEventListener('focusin', event => {
+  if (activeCityPicker && !activeCityPicker.root.contains(event.target)) closeCity();
+});
+mobile.addEventListener('change', () => closeCity(true));
+window.addEventListener('resize', () => { if (activeCityPicker) positionCity(activeCityPicker); }, { passive: true });
+window.addEventListener('scroll', () => {
+  if (activeCityPicker && !mobile.matches) positionCity(activeCityPicker);
+}, { passive: true });
+// Progressive enhancement: preserve the named native control for form state and no-script use.
+$('#care-city').hidden = true;
+$('.care-city-picker').hidden = false;
+$('#care-city-label').htmlFor = 'care-city-trigger';
 const studioTabs = $$('.studio-tabs [role="tab"]');
 studioTabs.forEach(tab => tab.addEventListener('click', () => setCity(tab.dataset.city)));
 $('.studio-tabs').addEventListener('keydown', event => {

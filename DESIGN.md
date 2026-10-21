@@ -6,19 +6,27 @@ The original automotive composition is the visual foundation. A large purple BMW
 
 ## Visual system
 
-Existing black `#0c0d0f`, silver `#eeefed`, red `#d71425` and deep red `#b60f1e`; local Unbounded and Golos. Equal responsive gutters, 16px running text, 13px secondary text and visible keyboard focus. Services, branch lists and FAQ retain the original fine separators rather than repeated filled panels. This deliberately takes precedence over Taste Skill's house ban on hairlines: the user requested the original visual foundation after reviewers found the replacement surfaces too heavy. Neutral scrims are used only for legibility over the actual hero photograph.
+Precision updates the existing black `#0c0d0f`, silver `#eeefed`, red `#d71425` and deep red `#b60f1e` system, with local Unbounded and Golos. Controls use 6px corners, compact icon controls use 4px, and shared color/duration tokens keep interaction states consistent. Main buttons and form fields are 56px tall; compact header buttons are 48px. Equal responsive gutters, 16px running text, 13px secondary text and visible keyboard focus remain. Services, branch lists and FAQ retain fine separators. Active service rows have a quiet tonal fill and red edge marker. Neutral scrims are used for legibility over the actual hero photograph.
 
 ## Components
 
 - Six services: desktop vertical tabs; single-open accordion at 1100px and below. Compact panels show descriptions and actions first; native photo disclosures retain complete, uncropped images. Resizing preserves service, selected work and keyboard focus.
 - The care form creates a concrete, editable WhatsApp enquiry. A rectangular silver “План ухода” shows selected services, optional car and branch. No repeated logo, shield decoration, quote or confirmed booking is implied.
-- City choice synchronizes the header, opening, form, contact panel and general WhatsApp links. Footer contact actions always belong to their named branch.
+- City choice synchronizes the header, opening, form, contact panel and general WhatsApp links. Both pickers display city, address and the selected checkmark. Desktop dialogs anchor above or below their trigger according to available space; at 600px and below, native modal bottom sheets make the background inert. Escape, backdrop/close-button dismissal and focus return are supported. The form retains its named native select for no-script use. Footer contact actions always belong to their named branch.
+- Buttons have filled, outline and neutral variants. Adding a service updates its action to a dark “Добавлено в план” state with a checkmark. Care choices always show a checkbox boundary and use an inverted surface plus a filled checkmark when selected.
+- Interface icons are local inline SVG symbols from Lucide 0.468.0, with a consistent 1.75px stroke. Closing, navigation, photo enlargement, download, route and phone actions each use their own symbol. The filled WhatsApp brand icon is retained. Lucide licensing is in `dist/assets/Lucide-LICENSE.txt`.
 - Gallery: one large and two smaller photographs per desktop page, two frames on tablets, one frame plus the next edge on phones. All nine photographs have a native full-size dialog, download, keyboard/swipe controls, focus return and error recovery.
 - Original-style restrained branch selector and FAQ; a simple red closing invitation. Useful branch contacts remain in the footer.
 
 ## Motion and accessibility
 
-The opening scrolls naturally at every width. Camera/light motion follows scrolling and pointer input; short entrances never gate reading. System reduced-motion changes cancel animation immediately. Phone header scrolls away; the contextual contact shortcut hides while form/contact/closing/footer actions are visible. Menu and hidden shortcut use inert appropriately. No light slider, motion toggle or scroll label is shown.
+The opening scrolls naturally at every width; camera/light motion follows scrolling and pointer input. Sections use one-time, lightly staggered entrances across service choices, gallery cards, care choices, approach, branches, FAQ and footer. Entrances take 480ms on phones and 620ms on desktop, with at most 165ms of staggering. Content is visible without motion JavaScript; no entrance uses a persistent hidden state.
+
+Desktop service changes move the description and crossfade the photograph. Compact service accordions, photo disclosures and FAQ animate both opening and closing through their measured heights in 420ms, then release to intrinsic height. Closing service content becomes inert immediately. Reversing a disclosure or selecting another service interrupts the current transition and settles the latest state. Resizing also releases temporary heights before the responsive layout changes.
+
+Care choices acknowledge selection with a short scale/checkmark response. Summary rows keep their DOM identity, animate additions and reposition surviving rows; list height changes smoothly. Gallery viewing animates the dialog entrance and uses directional 420ms photo transitions. A decorative, non-interactive copy retains the outgoing frame while the next image decodes, then fades away. Rapid navigation, load errors and closing remove those copies.
+
+Component hover/focus transitions use 180ms, with a 220ms mobile city sheet entrance. The shared animation controller cancels effects and resolves pending disclosure states when system reduced motion activates or the page becomes hidden. With reduced motion, native disclosures and all state changes are immediate. Phone header scrolls away; the contextual contact shortcut hides while form/contact/closing/footer actions are visible. Menu and hidden shortcut use inert appropriately. No light slider, motion toggle or scroll label is shown.
 
 ## Content
 

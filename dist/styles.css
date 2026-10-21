@@ -27,7 +27,12 @@
   --type-lead:20px;
   --type-body:16px;
   --type-small:13px;
-  --section-space:clamp(72px,9vw,144px)
+  --section-space:clamp(72px,9vw,144px);
+  --radius:6px;
+  --radius-small:4px;
+  --control-line:#414349;
+  --control-hover:#27292e;
+  --duration:180ms
 }
 * {
   box-sizing:border-box
@@ -69,7 +74,7 @@ svg {
   height:24px;
   fill:none;
   stroke:currentColor;
-  stroke-width:1.5;
+  stroke-width:1.75;
   stroke-linecap:round;
   stroke-linejoin:round;
   flex-shrink:0
@@ -79,8 +84,8 @@ img {
   display:block
 }
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,[tabindex="0"]:focus-visible {
-  outline:3px solid var(--red);
-  outline-offset:5px
+  outline:2px solid var(--red);
+  outline-offset:4px
 }
 .care :focus-visible,.closing :focus-visible {
   outline-color:var(--silver)
@@ -107,7 +112,7 @@ p {
   max-width:65ch
 }
 button,input,select {
-  border-radius:0
+  border-radius:var(--radius)
 }
 input {
   caret-color:var(--red)
@@ -208,53 +213,116 @@ input {
   height:20px
 }
 .city-picker {
-  position:relative
+  position:relative;
+  min-width:0
 }
-.city-picker>button {
+.city-picker>.city-trigger {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:18px;
+  gap:14px;
   min-height:48px;
   min-width:145px;
   padding:12px 16px;
   background:var(--panel);
-  border:0;
+  border:1px solid var(--control-line);
+  border-radius:var(--radius);
   font-size:var(--type-small);
-  font-weight:600
+  font-weight:500;
+  transition:background var(--duration),border-color var(--duration)
 }
-.city-picker>button svg {
+.city-picker>.city-trigger:hover,.city-picker>.city-trigger[aria-expanded=true] {
+  background:var(--control-hover);
+  border-color:#777a82
+}
+.city-trigger>span {
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.city-picker>.city-trigger>svg {
   width:16px;
   height:16px;
-  transition:transform .2s
+  transition:transform var(--duration) var(--ease)
 }
-.city-picker>button[aria-expanded=true] svg {
+.city-trigger[aria-expanded=true]>svg:last-child {
   transform:rotate(180deg)
 }
-.city-options {
+.city-popover {
   position:absolute;
-  top:calc(100% + 12px);
-  right:0;
-  width:340px;
-  max-height:calc(100dvh - var(--header-height) - 24px);
-  overflow-y:auto;
+  inset:auto 0 auto auto;
+  top:calc(100% + 10px);
+  margin:0;
+  width:344px;
+  max-width:calc(100vw - 32px);
+  max-height:calc(100dvh - var(--header-height) - 28px);
   padding:8px;
-  background:#242529;
+  border:1px solid var(--control-line);
+  border-radius:var(--radius);
+  background:var(--panel);
+  color:var(--silver);
+  box-shadow:0 16px 40px #0006;
+  overflow:auto;
   z-index:105
 }
+.city-popover[open] {
+  animation:city-enter var(--duration) var(--ease)
+}
+.city-popover-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:4px 4px 12px 12px
+}
+.city-popover-heading h2 {
+  font-family:var(--body);
+  font-size:var(--type-small);
+  font-weight:500;
+  letter-spacing:0;
+  color:var(--muted)
+}
+.icon-button {
+  display:grid;
+  place-items:center;
+  width:44px;
+  height:44px;
+  padding:12px;
+  flex-shrink:0;
+  border:1px solid var(--control-line);
+  border-radius:var(--radius-small);
+  background:transparent;
+  color:var(--silver);
+  transition:background var(--duration),border-color var(--duration)
+}
+.icon-button svg {
+  width:18px;
+  height:18px
+}
+.icon-button:hover {
+  background:var(--control-hover);
+  border-color:#777a82
+}
 .city-options:not([hidden]) {
-  display:grid
+  display:grid;
+  gap:4px
 }
 .city-options>button {
   display:grid;
-  gap:8px;
+  gap:6px;
   position:relative;
-  padding:18px 44px 18px 16px;
+  min-height:76px;
+  padding:16px 44px 16px 16px;
   text-align:left;
-  background:none;
-  border:0
+  border:1px solid transparent;
+  border-radius:var(--radius-small);
+  background:transparent;
+  color:var(--silver);
+  transition:background var(--duration),border-color var(--duration)
 }
 .city-options>button>span {
+  font-size:var(--type-body);
   font-weight:600
 }
 .city-options small {
@@ -263,20 +331,32 @@ input {
 }
 .city-options>button>svg {
   position:absolute;
-  right:14px;
+  right:16px;
   top:20px;
   width:20px;
   height:20px;
   display:none
 }
 .city-options>button[aria-selected=true] {
-  background:#383a40
+  background:#303237;
+  border-color:#5b5e66
 }
 .city-options>button[aria-selected=true]>svg {
   display:block
 }
 .city-options>button:hover {
-  background:#303237
+  background:var(--control-hover)
+}
+.city-options>button:focus-visible {
+  outline-color:var(--silver);
+  outline-offset:-3px
+}
+html.city-selecting {
+  overflow:hidden
+}
+@keyframes city-enter {
+  from {opacity:0;transform:translateY(-4px)}
+  to {opacity:1;transform:translateY(0)}
 }
 .menu-toggle,.mobile-nav {
   display:none
@@ -319,26 +399,28 @@ input {
   display:inline-flex;
   align-items:center;
   justify-content:space-between;
-  gap:28px;
-  padding:16px 22px;
-  border:0;
+  gap:24px;
+  padding:15px 22px;
+  border:1px solid transparent;
+  border-radius:var(--radius);
   background:var(--panel);
   color:var(--silver);
   font-size:var(--type-body);
   font-weight:600;
+  line-height:1.4;
   text-align:left;
-  transition:transform .2s var(--ease),background .2s
+  transition:background var(--duration),border-color var(--duration),color var(--duration),transform var(--duration) var(--ease)
 }
 .button svg {
   width:20px;
   height:20px;
-  transition:transform .25s var(--ease)
+  transition:transform var(--duration) var(--ease)
+}
+.button:hover {
+  background:var(--control-hover)
 }
 .button:active {
-  transform:translateY(2px)
-}
-.button:hover svg {
-  transform:translate(2px,-2px)
+  transform:translateY(1px)
 }
 .button-red {
   background:var(--red);
@@ -353,6 +435,21 @@ input {
 }
 .button-light:hover {
   background:white
+}
+.button-outline {
+  background:transparent;
+  border-color:var(--control-line)
+}
+.button-outline:hover {
+  background:var(--panel);
+  border-color:#777a82
+}
+.header-contact.button {
+  min-height:48px;
+  padding:12px 16px;
+  font-size:var(--type-small);
+  font-weight:500;
+  gap:12px
 }
 .text-link {
   display:inline-flex;
@@ -425,15 +522,19 @@ input {
   justify-content:space-between;
   text-align:left;
   gap:18px;
-  padding:24px 0;
+  padding:24px 16px;
   min-height:72px;
   border:0;
+  border-radius:0;
+  position:relative;
+  transition:background var(--duration),color var(--duration);
   /* taste-skill-ignore: retain the original restrained separators in service and branch lists. */ border-top:1px solid #c7c9c9;
   background:transparent;
   font-size:var(--type-body);
   font-weight:600
 }
 .service-tab:hover {
+  background:#e3e4e2;
   color:var(--deep-red)
 }
 .service-tab svg {
@@ -441,11 +542,21 @@ input {
   height:18px
 }
 .service-tab[aria-selected=true],.service-tab[aria-expanded=true] {
-  background:transparent;
+  background:#e3e4e2;
   color:var(--deep-red)
 }
-.service-tab[aria-selected=true] svg,.service-tab[aria-expanded=true] svg {
-  transform:rotate(45deg)
+.service-tab[aria-selected=true]:before,.service-tab[aria-expanded=true]:before {
+  content:"";
+  position:absolute;
+  left:0;
+  top:22px;
+  bottom:22px;
+  width:3px;
+  border-radius:2px;
+  background:var(--red)
+}
+.service-tab svg {
+  transition:transform var(--duration) var(--ease)
 }
 .service-panels {
   min-width:0
@@ -488,6 +599,13 @@ input {
   width:100%;
   font-size:var(--type-body);
   gap:12px
+}
+.service-request[data-added=true] {
+  background:var(--ink);
+  color:var(--silver)
+}
+.service-request[data-added=true]:hover {
+  background:#303237
 }
 .service-visual {
   position:relative;
@@ -539,11 +657,14 @@ input {
   justify-content:space-between;
   min-height:72px;
   padding:18px 16px;
-  background:#880b16;
+  border:1px solid #ffffff55;
+  border-radius:var(--radius);
+  background:#930d19;
   gap:12px;
   cursor:pointer;
   font-size:var(--type-body);
-  isolation:isolate
+  isolation:isolate;
+  transition:background var(--duration),border-color var(--duration),color var(--duration)
 }
 .care-options input {
   position:absolute;
@@ -553,6 +674,7 @@ input {
   margin:0;
   appearance:none;
   border:0;
+  border-radius:var(--radius);
   cursor:pointer
 }
 .care-options span,.care-options svg {
@@ -561,50 +683,81 @@ input {
 .care-options svg {
   width:20px;
   height:20px;
+  padding:2px;
+  border:1px solid #ffffff99;
+  border-radius:var(--radius-small);
+  transition:background var(--duration),border-color var(--duration)
+}
+.care-options svg use {
   opacity:0
 }
 .care-options label:has(input:checked) {
   background:var(--silver);
+  border-color:var(--silver);
   color:var(--ink)
 }
 .care-options label:has(input:checked) svg {
+  background:var(--ink);
+  border-color:var(--ink);
+  color:white
+}
+.care-options label:has(input:checked) svg use {
   opacity:1
 }
 .care-options label:hover {
-  background:#730812
+  background:#7b0b15;
+  border-color:#ffffff99
 }
 .care-options label:has(input:checked):hover {
-  background:white
+  background:white;
+  border-color:white
 }
 .form-fields {
   display:grid;
   grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+  align-items:end;
   gap:24px;
   margin-top:32px
 }
 .form-fields label {
+  display:block;
+  min-width:0;
   font-size:var(--type-small);
   font-weight:500
 }
 .form-fields label>span {
-  display:block;
-  opacity:.9;
+  display:inline;
+  margin-left:4px;
+  color:#f2ccd0;
   font-weight:400
 }
-.form-fields input,.form-fields select {
+.form-fields input,.form-fields select,.care-city-picker>.city-trigger {
   display:block;
   width:100%;
-  min-height:52px;
-  background:#940c18;
+  min-height:56px;
+  background:#930d19;
   color:white;
-  border:0;
-  padding:12px;
+  border:1px solid #ffffff66;
+  border-radius:var(--radius);
+  padding:14px 16px;
   margin-top:12px;
-  font-size:var(--type-body)
+  font-size:var(--type-body);
+  font-weight:400;
+  transition:background var(--duration),border-color var(--duration)
+}
+.form-fields input:hover,.form-fields select:hover,.care-city-picker>.city-trigger:hover,.care-city-picker>.city-trigger[aria-expanded=true] {
+  border-color:#ffffffaa;
+  background:#7b0b15
+}
+.form-fields input:focus-visible {
+  background:#7b0b15
 }
 .form-fields input::placeholder {
-  color:#f6d9dd;
+  color:#f2ccd0;
   opacity:1
+}
+.form-fields input {
+  caret-color:white
 }
 .form-fields select {
   color-scheme:dark;
@@ -613,11 +766,29 @@ input {
 .form-fields select option {
   background:var(--ink)
 }
+.care-city-picker>.city-trigger {
+  display:flex;
+  gap:10px;
+  text-align:left
+}
+.care-city-picker>.city-trigger>span {
+  flex:1
+}
+.care-city-picker>.city-trigger>.city-pin {
+  width:18px;
+  height:18px
+}
+.care-city-picker .city-popover {
+  top:auto;
+  bottom:calc(100% + 10px);
+  max-height:min(420px,70dvh)
+}
 .care-review {
   padding:32px;
   background:var(--silver);
   color:var(--ink);
-  min-width:0
+  min-width:0;
+  border-radius:var(--radius)
 }
 .care-review :focus-visible {outline-color:var(--red)}
 .care-review h3 {
@@ -647,17 +818,18 @@ input {
   flex-shrink:0;
   width:44px;
   height:44px;
-  background:#dde0da;
+  background:transparent;
+  border-radius:var(--radius-small);
   color:var(--ink);
   border:0
 }
 #care-selected button:hover {
-  background:#cdd1c8
+  background:#dde0da;
+  color:var(--deep-red)
 }
 #care-selected svg {
   width:18px;
-  height:18px;
-  transform:rotate(45deg)
+  height:18px
 }
 .care-empty {
   max-width:28ch
@@ -747,7 +919,10 @@ input {
   border:0;
   /* taste-skill-ignore: retain the original restrained separators in service and branch lists. */ border-top:1px solid #c7c9c9;
   text-align:left;
-  padding:28px 0;
+  padding:28px 16px;
+  border-radius:0;
+  position:relative;
+  transition:background var(--duration),color var(--duration);
   font-family:var(--display);
   font-size:var(--type-lead);
   font-weight:500;
@@ -759,9 +934,11 @@ input {
   height:20px
 }
 .studio-tabs>button[aria-selected=true] {
+  background:#e3e4e2;
   color:var(--deep-red)
 }
 .studio-tabs>button:hover {
+  background:#e3e4e2;
   color:var(--deep-red)
 }
 .studio-panel {
@@ -838,12 +1015,16 @@ input {
   display:none
 }
 .faq-list summary svg {
-  width:20px;
-  height:20px;
+  width:32px;
+  height:32px;
+  padding:7px;
+  border:1px solid var(--control-line);
+  border-radius:var(--radius-small);
   transition:transform .25s
 }
 .faq-list details[open] summary svg {
-  transform:rotate(45deg)
+  transform:rotate(180deg);
+  background:var(--control-hover)
 }
 .faq-list p {
   font-size:var(--type-body);
@@ -864,20 +1045,11 @@ input {
   max-width:17ch
 }
 .closing-link {
-  display:inline-flex;
-  align-items:center;
-  justify-content:space-between;
-  min-height:56px;
-  gap:28px;
-  padding:16px 22px;
   background:var(--ink);
-  font-size:var(--type-body);
-  font-weight:600;
   flex-shrink:0
 }
-.closing-link svg {
-  width:20px;
-  height:20px
+.closing-link:hover {
+  background:#303237
 }
 .footer {
   padding:64px var(--space) 32px;
@@ -1205,24 +1377,18 @@ input {
   .header-actions {
     gap:8px
   }
-  .city-picker>button {
+  .header .city-picker>.city-trigger {
     min-width:0;
     gap:6px;
     padding:10px 4px;
     max-width:130px;
     background:none;
+    border-color:transparent;
     font-size:var(--type-small)
   }
   .city-picker>button svg {
     width:13px;
     height:13px
-  }
-  .city-options {
-    position:fixed;
-    top:calc(var(--header-height) + 8px);
-    left:16px;
-    right:16px;
-    width:auto
   }
   .menu-toggle {
     width:44px;
@@ -1247,7 +1413,7 @@ input {
     min-height:72px;
     font-family:var(--body);
     font-size:var(--type-body);
-    padding:20px 0
+    padding:20px 16px
   }
   .service-panel {
     grid-template-columns:1fr;
@@ -1490,10 +1656,6 @@ input {
 .ui-ready .service-panel {
   margin-top:0
 }
-/* taste-skill-ignore: a city dropdown is a floating overlay. */
-.city-options {
-  /* taste-skill-ignore: floating dropdown shadow. */box-shadow:0 16px 40px #0006
-}
 
 
 /* Full service photographs remain available without extending the initial accordion. */
@@ -1561,5 +1723,52 @@ html:not(.ui-ready) .service-visual>summary {display:flex;align-items:center;jus
 @media(min-width:360px) and (max-width:600px) {
 .care-options {grid-template-columns:repeat(2,minmax(0,1fr))}
 .care-options label {min-height:76px;padding:14px 12px;gap:8px}
-.care-options svg {width:16px;height:16px}
+.care-options svg {width:20px;height:20px}
+}
+
+/* Precision controls on compact screens. */
+@media(max-width:600px) {
+  .city-picker>.city-trigger {min-width:0}
+  .city-popover,.care-city-picker .city-popover {
+    position:fixed;
+    inset:auto 0 0;
+    width:100%;
+    max-width:none;
+    max-height:calc(100dvh - 20px);
+    margin:0;
+    padding:16px 16px max(20px,env(safe-area-inset-bottom));
+    border-radius:12px 12px 0 0;
+    border-bottom:0
+  }
+  .city-popover:before {
+    content:"";
+    display:block;
+    width:32px;
+    height:3px;
+    border-radius:2px;
+    margin:0 auto 12px;
+    background:#64676e
+  }
+  .city-popover[open] {animation:city-sheet-enter 220ms var(--ease)}
+  .city-popover::backdrop {background:#000b}
+  .city-popover-heading {padding:0 0 16px 8px}
+  .city-popover-heading h2 {font-size:var(--type-body);color:var(--silver)}
+  .city-options>button {min-height:80px}
+  .care-city-picker>.city-trigger {max-width:none;padding:14px 16px;font-size:var(--type-body)}
+  .menu-toggle {border:1px solid var(--control-line);border-radius:var(--radius)}
+  .studio-tabs>button {border:1px solid #c7c9c9;border-radius:var(--radius-small)}
+  .studio-tabs>button[aria-selected=true] {border-color:var(--deep-red)}
+  .mobile-bottom>a {border-radius:var(--radius)}
+}
+@media(max-width:370px) {
+  .header .city-picker>.city-trigger {max-width:115px}
+  .care-options svg {width:20px;height:20px}
+}
+@keyframes city-sheet-enter {
+  from {opacity:0;transform:translateY(16px)}
+  to {opacity:1;transform:translateY(0)}
+}
+@media(hover:hover) and (pointer:fine) {
+  .button-red:hover svg:has(use[href="#arrow"]) {transform:translate(2px,-2px)}
+  .text-link:hover svg:has(use[href="#down"]) {transform:translateY(2px)}
 }

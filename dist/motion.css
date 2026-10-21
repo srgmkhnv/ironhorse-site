@@ -32,19 +32,28 @@ html[data-motion="off"] .hero-camera {
 html[data-motion="off"] .paint-light {
   display:none
 }
-@keyframes section-enter {
-  from {
-    opacity:.55;
-    transform:translateY(16px)
-  }
-  to {
-    opacity:1;
-    transform:translateY(0)
-  }
+/* Temporary size effects always release back to intrinsic content height. */
+.motion-sizing {
+  min-height:0;
+  overflow:clip;
+  overflow-anchor:none
 }
-.reveal-enter {
-  animation:section-enter .6s var(--ease)
+.service-visual>.service-photo-outgoing {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  pointer-events:none
 }
-.document-hidden .reveal-enter {
-  animation-play-state:paused
+.faq-list details[data-motion-open=false] summary svg,
+.service-visual[data-motion-open=false]>summary svg {
+  transform:none
+}
+html[data-motion=on] .photo-viewer[open]::backdrop {
+  animation:viewer-backdrop-enter 300ms ease-out
+}
+@keyframes viewer-backdrop-enter {
+  from {background:#0000}
+  to {background:#000e}
 }

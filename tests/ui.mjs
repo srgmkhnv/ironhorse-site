@@ -1,8 +1,4 @@
-import { resolve } from 'node:path';
-import { pathToFileURL } from 'node:url';
-const skillRoot = process.env.TASTE_SKILL_ROOT;
-if (!skillRoot) throw new Error('Set TASTE_SKILL_ROOT to the directory containing Taste Skill SKILL.md and scripts/.');
-const { Browser, sleep } = await import(pathToFileURL(resolve(skillRoot, 'scripts/lib/cdp.mjs')));
+import { Browser, sleep } from './browser.mjs';
 const previewUrl = process.env.UI_PREVIEW_URL || 'http://127.0.0.1:3000';
 import {writeFileSync} from 'node:fs';
 const b=await Browser.launch();const results=[];
