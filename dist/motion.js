@@ -5,19 +5,22 @@
   const hero = document.querySelector('.hero');
   const story = document.querySelector('.hero-story');
   const camera = document.querySelector('.hero-camera');
+  const light = camera.querySelector('.paint-light');
   const bottom = document.querySelector('.mobile-bottom');
   const nav = document.querySelector('#mobile-nav');
   const main = document.querySelector('main');
   const footer = document.querySelector('footer');
   const system = matchMedia('(prefers-reduced-motion: reduce)');
   const small = matchMedia('(max-width: 600px)');
+  const hover = matchMedia('(hover: hover) and (pointer: fine)');
   const animations = new Set();
   const effects = new WeakMap();
   const sizes = new Map();
   const serviceGhosts = new Set();
-  const ease = 'cubic-bezier(.22,1,.36,1)';
+  const ease = 'cubic-bezier(.2,.65,.3,1)';
   let enabled = !system.matches;
-  let frame = 0, measureFrame = 0, metrics, manualLight = null, lightAnimation, introCamera;
+  let frame = 0, measureFrame = 0, metrics, manualLight = null, lastFrame = 0;
+  let cameraProgress = 0, beam = 20;
   const clamp = value => Math.max(0, Math.min(1, value));
 
   function animate(node, keyframes, options = {}) {
@@ -25,7 +28,8 @@
     const { channel = 'transform', ...timing } = options;
     const channels = effects.get(node) || new Map();
     channels.get(channel)?.cancel();
-    const animation = node.animate(keyframes, { duration: 420, easing: ease, ...timing });
+    // Apply the first frame throughout a delay, rather than flashing from the base style.
+    const animation = node.animate(keyframes, { duration: 420, easing: ease, fill: 'backwards', ...timing });
     channels.set(channel, animation);
     effects.set(node, channels);
     animations.add(animation);
@@ -45,27 +49,39 @@
       const rect = node.getBoundingClientRect();
       return { top: rect.top + scrollY, bottom: rect.bottom + scrollY };
     });
-    metrics = { top: story.getBoundingClientRect().top + scrollY, bottom: story.getBoundingClientRect().bottom + scrollY, travel, contactRanges };
+    metrics = { top: story.getBoundingClientRect().top + scrollY, bottom: story.getBoundingClientRect().bottom + scrollY, width: hero.clientWidth, travel, contactRanges };
     schedule();
   }
   function requestMeasure() { if (!measureFrame) measureFrame = requestAnimationFrame(measure); }
-  function render() {
+  function render(time) {
     frame = 0;
     if (document.hidden || !metrics) return;
     const hasContactSection = metrics.contactRanges.some(range => range.top < scrollY + innerHeight && range.bottom > scrollY);
     const barHidden = scrollY + 100 < metrics.bottom || hasContactSection;
-    bottom.classList.toggle('is-hidden', barHidden);
-    bottom.inert = barHidden || document.querySelector('.menu-toggle').getAttribute('aria-expanded') === 'true';
-    if (!enabled || scrollY > metrics.bottom || scrollY + innerHeight < metrics.top) return;
+    if (bottom.classList.contains('is-hidden') !== barHidden) bottom.classList.toggle('is-hidden', barHidden);
+    const inert = barHidden || document.querySelector('.menu-toggle').getAttribute('aria-expanded') === 'true';
+    if (bottom.inert !== inert) bottom.inert = inert;
+    if (!enabled || scrollY > metrics.bottom || scrollY + innerHeight < metrics.top) { lastFrame = 0; return; }
     const progress = clamp((scrollY - metrics.top) / metrics.travel);
-    camera.style.setProperty('--camera-scale', (1 + progress * (small.matches ? .08 : .10)).toFixed(4));
-    camera.style.setProperty('--camera-x', `${-progress * 1.5}%`);
-    camera.style.setProperty('--camera-y', `${progress * (small.matches ? -8 : 12)}px`);
-    if (manualLight === null && !lightAnimation) camera.style.setProperty('--beam-position', `${20 + progress * 65}%`);
+    const targetBeam = manualLight ?? (20 + progress * 65);
+    const elapsed = lastFrame ? Math.min(50, time - lastFrame) : 1000 / 60;
+    const amount = 1 - Math.exp(-elapsed / 150);
+    lastFrame = time;
+    cameraProgress += (progress - cameraProgress) * amount;
+    beam += (targetBeam - beam) * amount;
+    const moving = Math.abs(progress - cameraProgress) > .0001 || Math.abs(targetBeam - beam) > .02;
+    if (!moving) { cameraProgress = progress; beam = targetBeam; lastFrame = 0; }
+    camera.style.setProperty('--camera-scale', (1 + cameraProgress * (small.matches ? .04 : .06)).toFixed(5));
+    camera.style.setProperty('--camera-x', `${-cameraProgress * .75}%`);
+    camera.style.setProperty('--camera-y', `${cameraProgress * (small.matches ? -4 : 6)}px`);
+    camera.style.setProperty('--beam-position', `${beam.toFixed(3)}%`);
+    // Move a composited light layer; never repaint a full-size photographic mask per frame.
+    light.style.transform = `translate3d(${(beam / 100 * metrics.width * 1.4).toFixed(2)}px,0,0)`;
+    if (moving) schedule();
   }
   function schedule() { if (!frame && !document.hidden) frame = requestAnimationFrame(render); }
   function panel(node) {
-    animate(node, [{ opacity: .35, transform: 'translateY(16px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 380 });
+    animate(node, [{ opacity: .8, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 320 });
     requestMeasure();
   }
 
@@ -131,11 +147,11 @@
       });
     } else if (next && previous !== next) {
       animate(next.querySelector('.service-details'), [
-        { opacity: .2, transform: 'translateX(24px)' },
+        { opacity: .7, transform: 'translateX(12px)' },
         { opacity: 1, transform: 'translateX(0)' }
-      ], { duration: 460 });
+      ], { duration: 360 });
       const image = next.querySelector('.service-visual img');
-      animate(image, [{ opacity: .25, transform: 'scale(1.035)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 560 });
+      animate(image, [{ opacity: .6, transform: 'scale(1.015)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 420 });
       if (photo?.complete && photo.naturalWidth && photo.src !== image.src) {
         const ghost = photo.cloneNode();
         ghost.removeAttribute('id');
@@ -170,7 +186,7 @@
     }, open);
     if (open) {
       const content = details.querySelector('p,img');
-      animate(content, [{opacity:.25,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}], {duration:380});
+      animate(content, [{opacity:.8,transform:'translateY(6px)'},{opacity:1,transform:'translateY(0)'}], {duration:320});
     }
   }
   function care(list, update) {
@@ -209,32 +225,31 @@
     [...sizes.values()].forEach(record => record.finish());
     animations.forEach(animation => animation.cancel());
     animations.clear();
-    lightAnimation = null;
-    introCamera = null;
+    lastFrame = 0;
   }
   function setEnabled(value) {
     enabled = value;
     if (!value) settle();
     manualLight = null;
+    if (metrics) {
+      cameraProgress = clamp((scrollY - metrics.top) / metrics.travel);
+      beam = 20 + cameraProgress * 65;
+    }
     root.dataset.motion = value ? 'on' : 'off';
     requestMeasure();
   }
   function steer(event) {
-    if (!enabled || event.target.closest('a,button,input,select') || (event.pointerType === 'touch' && event.buttons === 0)) return;
-    lightAnimation?.cancel();
-    lightAnimation = null;
+    // Touch gestures scroll the page; they must not steer the light at the same time.
+    if (!enabled || !hover.matches || event.pointerType === 'touch' || event.target.closest('a,button,input,select')) return;
     const rect = hero.getBoundingClientRect();
-    manualLight = clamp((event.clientX - rect.left) / rect.width) * 100;
-    camera.style.setProperty('--beam-position', `${manualLight}%`);
+    manualLight = 20 + clamp((event.clientX - rect.left) / rect.width) * 65;
+    schedule();
   }
   system.addEventListener('change', event => setEnabled(!event.matches));
   hero.addEventListener('pointermove', steer, { passive: true });
-  hero.addEventListener('pointerdown', steer, { passive: true });
-  ['pointerleave', 'pointerup', 'pointercancel'].forEach(name => hero.addEventListener(name, () => { manualLight = null; schedule(); }, { passive: true }));
+  ['pointerleave', 'pointercancel'].forEach(name => hero.addEventListener(name, () => { manualLight = null; schedule(); }, { passive: true }));
   window.addEventListener('scroll', () => {
     manualLight = null;
-    introCamera?.cancel(); introCamera = null;
-    lightAnimation?.cancel(); lightAnimation = null;
     schedule();
   }, { passive: true });
   window.addEventListener('resize', () => { [...sizes.values()].forEach(record => record.finish()); requestMeasure(); }, { passive: true });
@@ -253,27 +268,23 @@
   });
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
-      const groups = new Map();
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const node = entry.target;
-        const group = node.closest('section,footer');
-        const index = groups.get(group) || 0;
-        groups.set(group, index + 1);
         node.classList.add('motion-revealed');
         animate(node, [
-          {opacity:.15,transform:`translateY(${small.matches ? 18 : 28}px)`},
+          {opacity:.9,transform:'translateY(8px)'},
           {opacity:1,transform:'translateY(0)'}
-        ], {duration:small.matches ? 480 : 620, delay:Math.min(index * 55, 165)});
+        ], {duration:420});
         observer.unobserve(node);
       });
-    }, { threshold:.12, rootMargin:'0px 0px -32px 0px' });
-    document.querySelectorAll('.section-heading h2,.section-heading>p,.service-tab,.service-visual,.photo-card,.care-form legend,.care-options label,.form-fields,.care-review,.approach-photo,.approach h2,.approach-lead,.approach-points article,.studio-tabs>button,.studio-panel,.faq h2,.faq-list details,.closing h2,.closing-link,.footer-intro,.footer-nav,.footer-branch,.footer-signature').forEach(node => observer.observe(node));
+    }, { threshold:0, rootMargin:'0px 0px 48px 0px' });
+    document.querySelectorAll('.section-heading h2,.section-heading>p,.photo-card,.care-form legend,.form-fields,.care-review,.approach-photo,.approach h2,.approach-lead,.approach-points article,.studio-panel,.faq h2,.closing h2,.closing-link,.footer-intro,.footer-nav,.footer-branch,.footer-signature').forEach(node => observer.observe(node));
   }
   document.querySelectorAll('.care-options input').forEach(input => input.addEventListener('change', () => {
     const label = input.closest('label');
-    animate(label, [{transform:'scale(.97)'},{transform:'scale(1)'}], {duration:260});
-    if (input.checked) animate(label.querySelector('svg'), [{opacity:.2,transform:'scale(.55) rotate(-12deg)'},{opacity:1,transform:'scale(1) rotate(0)'}], {duration:320});
+    animate(label, [{transform:'scale(.985)'},{transform:'scale(1)'}], {duration:220});
+    if (input.checked) animate(label.querySelector('svg'), [{opacity:.6,transform:'scale(.8)'},{opacity:1,transform:'scale(1)'}], {duration:260});
   }));
   document.querySelectorAll('.faq-list details,.service-visual').forEach(details => {
     details.querySelector('summary').addEventListener('click', event => {
@@ -288,11 +299,5 @@
   setEnabled(enabled);
   Promise.all([camera.querySelector('img').decode().catch(() => {}), document.fonts?.ready ?? Promise.resolve()]).then(() => {
     measure();
-    if (scrollY > 100 || document.hidden) return;
-    hero.querySelectorAll('h1,p,.hero-buttons').forEach((node, index) => animate(node, [{ opacity: .7, transform: 'translateY(16px)' }, { opacity: 1, transform: 'translateY(0)' }], { delay: index * 60, duration: 600 }));
-    introCamera = animate(camera, [{ transform: 'scale(1.06)' }, { transform: 'scale(1)' }], { duration: 1200 });
-    try { CSS.registerProperty({ name: '--beam-position', syntax: '<percentage>', inherits: true, initialValue: '38%' }); } catch (_) { /* Already registered or unsupported. */ }
-    lightAnimation = animate(camera, [{ '--beam-position': '-15%' }, { '--beam-position': '95%' }], { duration: 2200, channel:'light' });
-    lightAnimation?.addEventListener('finish', () => { lightAnimation = null; schedule(); }, { once: true });
   });
 })();

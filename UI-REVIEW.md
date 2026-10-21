@@ -2,6 +2,14 @@
 
 2026-10-21. Component and whole-page motion update based on `d29f6e61204fb44a80a57aac97565388f933895c`.
 
+## Scroll-stability correction
+
+A user-reported scroll jitter was reproduced in Chromium: an already visible service choice stayed at opacity 1 during its 165ms delay, then jumped to approximately 0.16 opacity and a 28px displacement. Hero pointer exit also moved the light by about 67 percentage points in one frame.
+
+The correction removes scroll entrances from interactive choices and FAQ rows. Content entrances have no delay and use opacity 0.9–1 with an 8px displacement. Other delayed effects apply their first frame during the delay. Camera/light control uses one time-based damped loop that stops at rest; touch does not steer the light. The full-image moving mask and competing autoplay effects are removed. Scrollbar space remains reserved while dialogs are open.
+
+A repeat sample showed content opacity rising monotonically from 0.9 and a maximum light-position change of about 7.3 percentage points per frame in the same desktop interaction. These measurements establish the specific regression correction, not a frame-rate guarantee for physical devices. The original 664 assertions pass, plus 20 stability assertions on desktop/phone: **684 total**. The earlier video walkthroughs below predate this correction.
+
 ## Changes
 
 - Shared 6px control corners, 4px compact icon corners, 56px main controls, 48px compact header controls and 180ms interaction transitions. Filled, outline and neutral button treatments use the existing palette.
@@ -10,7 +18,7 @@
 - Header and form city pickers show each city, address and selected checkmark. Desktop dialogs position above or below the trigger within the viewport. Native modal bottom sheets on phones shield the background, lock page scrolling and support Escape, close-button/backdrop dismissal and focus return. A breakpoint change closes the sheet and unlocks scrolling.
 - Local Lucide 0.468.0 SVG symbols replace reused/rotated plus and diagonal-arrow icons for close, photo enlargement, previous/next, download, phone, route and up actions. The filled WhatsApp icon is retained; licensing ships with the assets.
 - FAQ disclosure chevrons and gallery controls use matching dimensions and interaction states.
-- Motion across the service explorer, gallery, care form, approach, branches, FAQ, closing and footer: one-time staggered entrances, desktop service image crossfades, measured opening and closing of compact services/photo disclosures/FAQ, care-summary height and row transitions, selection acknowledgement, mobile-menu entrance and directional photo-viewer transitions. The outgoing gallery frame remains visible during decoding.
+- Motion across the service explorer, gallery, care form, approach, branches, FAQ, closing and footer: gentle one-time content entrances, desktop service image crossfades, measured opening and closing of compact services/photo disclosures/FAQ, care-summary height and row transitions, selection acknowledgement, mobile-menu entrance and directional photo-viewer transitions. The outgoing gallery frame remains visible during decoding.
 - Interrupted size transitions resolve their final state and remove clipping. Closing service panels become inert immediately. Runtime reduced motion, page visibility changes and resizing release temporary effects; native disclosures remain functional without scripting.
 - Playwright is a development-only dependency. Browser checks no longer require a local Taste Skill installation. Static deployment still consists only of `dist/`.
 

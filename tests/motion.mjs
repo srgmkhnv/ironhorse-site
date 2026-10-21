@@ -15,7 +15,7 @@ try {
     await page.goto(url);await page.evaluate(() => document.fonts.ready);
     check(await page.evaluate(() => window.IHMotion.enabled),`${width}: normal motion enabled`);
     // Sample entrances across the page, without auto-waiting for animations to finish.
-    for (const selector of ['.services .section-heading h2','.photo-card','.care-form legend','.approach-photo','.studio-panel','.faq-list details','.closing h2','.footer-branch']) {
+    for (const selector of ['.services .section-heading h2','.photo-card','.care-form legend','.approach-photo','.studio-panel','.faq h2','.closing h2','.footer-branch']) {
       await page.locator(selector).first().evaluate(node => node.scrollIntoView({behavior:'instant',block:'center'}));
       await page.waitForFunction(selector => document.querySelector(selector).classList.contains('motion-revealed'),selector);
       check(await page.locator(selector).first().evaluate(node => node.getAnimations().some(a => a.playState === 'running')),`${width}: ${selector} has a visible entrance`);

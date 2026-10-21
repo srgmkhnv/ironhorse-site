@@ -39,6 +39,7 @@
 }
 html {
   scroll-behavior:smooth;
+  scrollbar-gutter:stable;
   scroll-padding-top:calc(var(--header-height) + 24px);
   scrollbar-color:#696c70 var(--ink)
 }
@@ -366,7 +367,7 @@ html.city-selecting {
 .hero-media {position:absolute;inset:0;z-index:-2}
 .hero-camera {position:absolute;inset:0;transform-origin:65% 65%}
 .hero-camera>img {width:100%;height:100%;object-fit:cover;object-position:center 58%;filter:brightness(.82)}
-.paint-light {position:absolute;inset:0;background:url('assets/photos/photo-04.webp') center 58%/cover no-repeat;filter:brightness(1.15);opacity:.8;pointer-events:none}
+.paint-light {position:absolute;top:-15%;bottom:-15%;left:-40%;width:40%;background:linear-gradient(110deg,transparent 18%,#ffffff08 35%,#ffffff35 50%,#ffffff08 65%,transparent 82%);mix-blend-mode:soft-light;opacity:.5;pointer-events:none}
 /* taste-skill-ignore: neutral photographic scrims provide text contrast over the actual hero photo. */ .hero-shade {position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,#08090bdd,transparent 85%),linear-gradient(180deg,#0c0d0f70,transparent 65%,#0c0d0f60)}
 .hero-content {max-width:900px}
 .hero h1 {font-size:var(--type-display);line-height:1.08;letter-spacing:-.055em}
@@ -377,7 +378,6 @@ html.city-selecting {
 .hero {padding-top:48px;min-height:780px}
 .hero h1 {font-size:clamp(42px,7vw,64px)}
 .hero-camera>img {object-position:63% 70%}
-.paint-light {background-position:63% 70%}
 }
 @media(max-width:600px) {
 .hero {padding-top:36px;min-height:768px;height:calc(100svh - var(--header-height));max-height:980px}
@@ -388,7 +388,6 @@ html.city-selecting {
 .hero-buttons .text-link {font-size:var(--type-small)}
 .hero-media {inset:285px -80px 0 -55px}
 .hero-camera>img {object-fit:cover;object-position:61% 65%;filter:brightness(.9)}
-.paint-light {background-position:61% 65%}
 /* taste-skill-ignore: neutral photographic scrim, not a decorative gradient. */ .hero-shade {background:linear-gradient(180deg,#0c0d0f 0,#0c0d0f 37%,#0c0d0f90 47%,transparent 65%,#0c0d0f50)}
 }
 @media(max-width:370px) {.hero {min-height:760px}.hero-content>p {font-size:16px}.hero-media {inset:330px -110px 0 -55px}}
