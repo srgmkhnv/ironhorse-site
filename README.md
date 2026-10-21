@@ -25,7 +25,7 @@ The UI/motion changes and optional deployment workflow are merged into `main`. A
 
 ## Interface
 
-- The opening restores the original large automotive photograph and restrained black/red/silver composition. It clearly names detailing and leads directly to the selected branch's WhatsApp. The exact wordmark appears in the header and footer; no repeated hero logo or shield-shaped surfaces remain.
+- The opening features a studio recreation of the owner’s red BMW M5 F90 LCI and the restrained black/red/silver composition. Three local WebP compositions serve desktop, tablet and phone through a responsive picture; matching media preloads request only the active composition. Existing smoothed camera and light animation also applies to this photograph. It clearly names detailing and leads directly to the selected branch's WhatsApp. The exact wordmark appears in the header and footer; no repeated hero logo or shield-shaped surfaces remain.
 - Above 1100px, six services use vertical tabs with a panel on the right. At 1100px and below, the same buttons and panels form a single-open accordion. Resizing retains the current service, selections and focus. Full service photographs are always visible on desktop; compact panels expose them through a native “Посмотреть автомобиль” disclosure, closed initially. The whole image remains available without cropping.
 - The care form presents the selected services, optional vehicle model and branch in a contrasting silver “План ухода” summary. Removing a service synchronizes its checkbox. All selected information comes from the same browser-local state and is encoded into an editable WhatsApp message. The site does not send a message or reserve an appointment.
 - Precision components share 6px control corners, consistent button/field sizes and short interaction transitions. Service actions distinguish added work; care choices have visible checkbox boundaries. Local Lucide icons identify the individual actions; the filled WhatsApp icon remains.
@@ -44,7 +44,7 @@ Without JavaScript, the service descriptions and all branch phone/WhatsApp/map l
 - `dist/styles.css`: brand tokens, five typography roles, restrained service/branch/FAQ separators, controls and responsive layout. Replaces the former `refinements.css` override layer.
 - `dist/motion.js` / `motion.css`: event-driven photographic movement, entrances, menu page shielding and system motion preference.
 - `dist/gallery.js` / `gallery.css`: gallery positioning and native dialog.
-- `dist/assets/`: original shield/wordmark, local Golos and Unbounded fonts, Lucide license, and nine edited owner-derived photographs with provenance sidecars. Lucide 0.468.0 symbols are embedded in `index.html`; no icon runtime or CDN is loaded.
+- `dist/assets/`: original shield/wordmark, local Golos and Unbounded fonts, Lucide license, nine edited owner-derived gallery photographs, and three responsive red-BMW hero recreations with provenance sidecars. Lucide 0.468.0 symbols are embedded in `index.html`; no icon runtime or CDN is loaded.
 
 No prices, guarantees, customer reviews, project results or brand partnerships are invented. The owner-derived photos have regenerated studio backgrounds; captions describe the vehicles and do not claim specific service outcomes or actual premises. Preserve provenance sidecars and the owner's instruction to omit public technical retouching labels.
 

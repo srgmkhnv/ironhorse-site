@@ -2,7 +2,7 @@
 
 ## Direction
 
-The original automotive composition is the visual foundation. A large purple BMW, its paint and reflections lead the first screen. “Детейлинг с характером” names the service; “Обсудить уход” goes directly to the selected branch's WhatsApp. The exact original logo stays in the header and returns at full width in the footer. Oversized repeated hero branding, silver hero cards and tapered section edges have been removed following independent reviews and the owner's feedback.
+The original automotive composition is the visual foundation. A red BMW M5 F90 LCI leads the first screen, recreated in a dark studio from the owner’s reference photographs. Wide desktop, three-quarter tablet and frontal phone compositions share the same red paint, black roof/wheels and facelift lights. “Детейлинг с характером” names the service; “Обсудить уход” goes directly to the selected branch's WhatsApp. The exact original logo stays in the header and returns at full width in the footer. Oversized repeated hero branding, silver hero cards and tapered section edges have been removed following independent reviews and the owner's feedback.
 
 ## Visual system
 
