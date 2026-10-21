@@ -20,7 +20,9 @@ Precision updates the existing black `#0c0d0f`, silver `#eeefed`, red `#d71425` 
 
 ## Motion and accessibility
 
-The opening scrolls naturally at every width; camera/light motion follows scrolling and pointer input. Sections use one-time, lightly staggered entrances across service choices, gallery cards, care choices, approach, branches, FAQ and footer. Entrances take 480ms on phones and 620ms on desktop, with at most 165ms of staggering. Content is visible without motion JavaScript; no entrance uses a persistent hidden state.
+The opening scrolls naturally at every width. A single, time-based damped controller moves camera framing and light; it stops scheduling frames when input settles. Touch gestures only scroll and do not also steer light horizontally. The photo has no competing autoplay zoom or sweeping-light animation. The light uses a static gradient on a composited transform layer, not a full-resolution photo duplicate with a mask repainted every frame. Opening text stays still.
+
+Content sections use gentle one-time entrances: opacity 0.9 to 1 and an 8px shift over 420ms, with no stagger delay. Observation begins just below the viewport. Service/branch choices, care options and FAQ rows have no scroll entrance, so interactive targets stay still. Delayed interaction animations apply their first frame during the delay to prevent flashing from the base style. No persistent hidden state gates content. A stable scrollbar gutter prevents sideways shifts when dialogs lock page scrolling.
 
 Desktop service changes move the description and crossfade the photograph. Compact service accordions, photo disclosures and FAQ animate both opening and closing through their measured heights in 420ms, then release to intrinsic height. Closing service content becomes inert immediately. Reversing a disclosure or selecting another service interrupts the current transition and settles the latest state. Resizing also releases temporary heights before the responsive layout changes.
 

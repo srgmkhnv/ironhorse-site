@@ -2,18 +2,19 @@
   --camera-scale:1;
   --camera-x:0%;
   --camera-y:0px;
-  --beam-position:38%
+  --beam-position:20%
 }
 .hero-story {
   position:relative
 }
 .hero-camera {
   transform:translate3d(var(--camera-x),var(--camera-y),0) scale(var(--camera-scale));
-  isolation:isolate
+  isolation:isolate;
+  will-change:transform
 }
-/* taste-skill-ignore: owner-approved photographic light mask, not a gradient surface. */
+/* A static light texture moves on its own layer, without a per-frame image mask. */
 .paint-light {
-  /* taste-skill-ignore: approved photographic light mask. */mask-image:linear-gradient(108deg,transparent calc(var(--beam-position) - 18%),#000 calc(var(--beam-position) - 4%),#000 calc(var(--beam-position) + 4%),transparent calc(var(--beam-position) + 18%))
+  will-change:transform
 }
 html.menu-open {
   overflow:hidden
