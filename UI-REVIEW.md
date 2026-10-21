@@ -2,6 +2,12 @@
 
 2026-10-21. Component and whole-page motion update based on `d29f6e61204fb44a80a57aac97565388f933895c`.
 
+## Red BMW hero
+
+The opening now uses a studio recreation of the owner’s red BMW M5 F90 LCI, with black roof/wheels and facelift light signatures. Desktop uses a wide front three-quarter view, tablet a square three-quarter view, and phones a frontal view. Responsive picture sources and matching media preloads load one hero asset per viewport. Local WebP assets retain their generated pixel dimensions; provenance is recorded alongside each asset. Existing damped camera and gradient-light animation remains in place. Compact compositions fit the complete vehicle within the frame.
+
+All 684 browser assertions passed with the new hero. Additional manual Chromium checks at 320, 390, 768, 1440 and 2560px confirmed image decoding, the expected single image request, no horizontal overflow or JavaScript errors, and continued scroll-driven camera transforms. Compact framing was refined and the 20 motion-stability assertions repeated. Current desktop/phone screenshots are in `docs/previews/desktop.jpg` and `mobile.jpg`; older walkthrough videos still show the purple hero.
+
 ## Scroll-stability correction
 
 A user-reported scroll jitter was reproduced in Chromium: an already visible service choice stayed at opacity 1 during its 165ms delay, then jumped to approximately 0.16 opacity and a 28px displacement. Hero pointer exit also moved the light by about 67 percentage points in one frame.
