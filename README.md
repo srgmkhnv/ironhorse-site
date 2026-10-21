@@ -13,13 +13,15 @@ The preview runs at http://localhost:3000. Deploy only `dist/`. `.openai/hosting
 
 ## GitHub Pages
 
+Published site: **https://srgmkhnv.github.io/ironhorse-site/**. The public repository currently publishes the root of `gh-pages`, with `.nojekyll`. GitHub confirmed successful publication in [run 39621131774](https://github.com/srgmkhnv/ironhorse-site/actions/runs/39621131774) on 2026-10-21 after a queued initial deployment was replaced by a fresh publication.
+
 `.github/workflows/pages.yml` validates production JavaScript and publishes only `dist/` after changes merge into `main`. Pull requests validate/package the site without deploying. Manual runs are also available from Actions → Deploy GitHub Pages.
 
 The repository's Settings → Pages → Build and deployment → Source must be **GitHub Actions**. GitHub requires an eligible plan for Pages from a private repository. The workflow does not change repository visibility or require a personal token. The default project address is `https://srgmkhnv.github.io/ironhorse-site/`; use the deployment's environment URL as the actual address once a deployment succeeds. All site asset URLs are relative so the project subdirectory is supported.
 
 A ready-to-publish static snapshot is also available on the `gh-pages` branch, with `index.html` at the root and `.nojekyll`. To publish that snapshot directly, set Settings → Pages → Source to **Deploy from a branch**, select **gh-pages / (root)** and save. This source publishes commits to `gh-pages`; it does not automatically copy subsequent changes from `main`.
 
-Publication attempt on 2026-10-21: the UI/motion changes and deployment workflow are merged into `main`. All 664 local browser assertions pass with the `/ironhorse-site/` project prefix. GitHub Actions run [39617756328](https://github.com/srgmkhnv/ironhorse-site/actions/runs/39617756328) failed before assigning a runner or executing any build step; publication was skipped. The connected integration cannot read the check annotations or change Pages settings. A successful public deployment has not been verified.
+The UI/motion changes and optional deployment workflow are merged into `main`. All 664 local browser assertions pass with the `/ironhorse-site/` project prefix. The earlier private-repository attempt [39617756328](https://github.com/srgmkhnv/ironhorse-site/actions/runs/39617756328) failed before assigning a runner; it is superseded by the successful public branch deployment linked above. For the current branch source, publish future updates by copying `dist/` to the root of `gh-pages`, preserving `.nojekyll`.
 
 ## Interface
 
