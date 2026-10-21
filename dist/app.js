@@ -145,25 +145,32 @@ function updateCare() {
   const selected = Object.keys(services).filter(key => state.selected.has(key));
   const list = $('#care-selected');
   const focusedKey = document.activeElement?.dataset.removeService;
-  list.replaceChildren();
-  if (!selected.length) {
-    const item = document.createElement('li');
-    item.className = 'care-empty';
-    item.textContent = 'Консультация по подбору ухода';
-    list.append(item);
-  }
-  selected.forEach(key => {
-    const item = document.createElement('li');
-    const label = document.createElement('span');
-    label.textContent = services[key].name;
-    const remove = document.createElement('button');
-    remove.type = 'button';
-    remove.dataset.removeService = key;
-    remove.setAttribute('aria-label', `Убрать: ${services[key].name}`);
-    remove.innerHTML = '<svg aria-hidden="true"><use href="#close"/></svg>';
-    item.append(label, remove);
-    list.append(item);
-  });
+  const paintList = () => {
+    const existing = new Map([...list.children].map(item => [item.dataset.serviceKey || 'empty', item]));
+    const keys = selected.length ? selected : ['empty'];
+    const items = keys.map(key => {
+      if (existing.has(key)) return existing.get(key);
+      const item = document.createElement('li');
+      item.dataset.serviceKey = key;
+      if (key === 'empty') {
+        item.className = 'care-empty';
+        item.textContent = 'Консультация по подбору ухода';
+        return item;
+      }
+      const label = document.createElement('span');
+      label.textContent = services[key].name;
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.dataset.removeService = key;
+      remove.setAttribute('aria-label', `Убрать: ${services[key].name}`);
+      remove.innerHTML = '<svg aria-hidden="true"><use href="#close"/></svg>';
+      item.append(label, remove);
+      return item;
+    });
+    list.replaceChildren(...items);
+  };
+  if (window.IHMotion) window.IHMotion.care(list, paintList);
+  else paintList();
   $$('[data-care-service]').forEach(input => { input.checked = state.selected.has(input.dataset.careService); });
   $('#care-car').textContent = state.car || 'Обсудим со специалистом';
   $('#care-branch').textContent = `${branches[state.city].name} · ${branchAddress(branches[state.city])}`;
@@ -239,13 +246,16 @@ function paintServices() {
 }
 function setService(key, toggle = false) {
   if (!services[key]) return;
-  state.expanded = compactServices.matches && toggle && state.service === key ? !state.expanded : true;
-  state.service = key;
-  paintServices();
-  const panel = $(`#service-${key}`);
-  if (!panel.hidden) animatePanel(panel.querySelector('.service-details'));
+  const update = () => {
+    state.expanded = compactServices.matches && toggle && state.service === key ? !state.expanded : true;
+    state.service = key;
+    paintServices();
+  };
+  if (window.IHMotion) window.IHMotion.services(update, compactServices.matches);
+  else update();
 }
 function layoutServices() {
+  window.IHMotion?.finishServices();
   const focused = document.activeElement;
   const activePanel = focused?.closest('.service-panel');
   if (activePanel) { state.service = activePanel.id.slice('service-'.length); state.expanded = true; }

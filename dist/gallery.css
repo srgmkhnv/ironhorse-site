@@ -55,10 +55,11 @@
   height:100%;
   object-fit:cover;
   object-position:center 62%;
-  transition:transform .7s var(--ease)
+  transition:transform .45s var(--ease)
 }
-.photo-open:hover img {
-  transform:scale(1.025)
+@media(hover:hover) and (pointer:fine) {
+  .photo-open:hover img {transform:scale(1.035)}
+  .photo-open:hover .photo-enlarge {background:var(--silver);color:var(--ink)}
 }
 .photo-open:focus-visible {
   outline-offset:-5px;
@@ -74,7 +75,8 @@
   place-items:center;
   background:#151618;
   border:1px solid #ffffff40;
-  border-radius:var(--radius-small)
+  border-radius:var(--radius-small);
+  transition:background var(--duration),color var(--duration)
 }
 .photo-enlarge svg {
   height:18px;
@@ -186,6 +188,11 @@ html.photo-viewing {
   min-height:0;
   user-select:none;
   -webkit-user-drag:none
+}
+.photo-viewer-stage>.photo-transition-outgoing {
+  position:absolute;
+  inset:0;
+  pointer-events:none
 }
 .photo-viewer-stage>p {
   position:absolute;

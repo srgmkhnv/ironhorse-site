@@ -1,6 +1,6 @@
-# Iron Horse — Precision component review
+# Iron Horse — Precision components and motion review
 
-2026-10-21. Component update based on `d29f6e61204fb44a80a57aac97565388f933895c`.
+2026-10-21. Component and whole-page motion update based on `d29f6e61204fb44a80a57aac97565388f933895c`.
 
 ## Changes
 
@@ -10,6 +10,8 @@
 - Header and form city pickers show each city, address and selected checkmark. Desktop dialogs position above or below the trigger within the viewport. Native modal bottom sheets on phones shield the background, lock page scrolling and support Escape, close-button/backdrop dismissal and focus return. A breakpoint change closes the sheet and unlocks scrolling.
 - Local Lucide 0.468.0 SVG symbols replace reused/rotated plus and diagonal-arrow icons for close, photo enlargement, previous/next, download, phone, route and up actions. The filled WhatsApp icon is retained; licensing ships with the assets.
 - FAQ disclosure chevrons and gallery controls use matching dimensions and interaction states.
+- Motion across the service explorer, gallery, care form, approach, branches, FAQ, closing and footer: one-time staggered entrances, desktop service image crossfades, measured opening and closing of compact services/photo disclosures/FAQ, care-summary height and row transitions, selection acknowledgement, mobile-menu entrance and directional photo-viewer transitions. The outgoing gallery frame remains visible during decoding.
+- Interrupted size transitions resolve their final state and remove clipping. Closing service panels become inert immediately. Runtime reduced motion, page visibility changes and resizing release temporary effects; native disclosures remain functional without scripting.
 - Playwright is a development-only dependency. Browser checks no longer require a local Taste Skill installation. Static deployment still consists only of `dist/`.
 
 ## Validation
@@ -17,9 +19,10 @@
 - `npm run check`: all three production JavaScript files pass syntax checks.
 - `tests/ui.mjs`: **274 browser assertions**, covering existing service tabs/accordions, care selection/removal, synchronized branches, encoded WhatsApp enquiries, gallery bounds, all nine images, image errors/recovery, rapid viewer changes, keyboard/touch/focus, resizing and runtime reduced motion.
 - `tests/components.mjs`: **193 assertions**, using pointer and keyboard input on both city pickers. Covers all branches, city/address selection, viewport bounds, modal behavior, Home/End/Space/Enter/Escape, cancellation, focus return, service selection/removal, backdrop dismissal, breakpoint changes and native no-script city selection.
-- Both suites cover 320×720, 390×844, 568×320, 768×1024, 1100×900, 1280×800 and 1440×1000 in Chromium.
+- `tests/motion.mjs`: **197 assertions** with normal motion. Samples running entrances across eight sections, intermediate service/FAQ heights, opening/closing/reversals, rapid service/photo changes, care row changes and focus, outgoing-frame retention, runtime reduced-motion activation during an effect and resizing mid-transition.
+- All three suites cover 320×720, 390×844, 568×320, 768×1024, 1100×900, 1280×800 and 1440×1000 in Chromium: **664 assertions** in total.
 - Axe-core 4.10.3, WCAG 2 A/AA and 2.1 AA tags: **zero detected violations** for the main page, open header picker and open form picker at 390px and 1440px. This is a bounded automated scan, not a claim of complete accessibility certification.
-- Screenshots inspected for the opening, service explorer, care form, desktop picker, mobile sheet and full-size gallery viewer. No independent-agent visual review or conversion result is claimed for this update.
+- Screenshots inspected for the opening, service explorer, care form, desktop picker, mobile sheet and full-size gallery viewer. Normal-motion walkthroughs recorded at 1280×800 (21 seconds) and 390×844 (28 seconds), with no JavaScript errors; frame sheets inspected across the whole page. No independent-agent visual review or conversion result is claimed for this update.
 - `git diff --check` and local asset, fragment and SVG symbol checks pass.
 - WhatsApp tests intercept navigation; no messages are sent.
 
@@ -29,6 +32,8 @@
 - `docs/previews/precision-desktop.jpg`: care form with two selected services.
 - `docs/previews/precision-mobile.jpg`: same form at 390px, including its summary.
 - `docs/previews/precision-city-mobile.jpg`: branch selection sheet.
+- `docs/previews/motion-desktop.mp4`: normal-motion desktop walkthrough across the site.
+- `docs/previews/motion-mobile.mp4`: normal-motion phone walkthrough, including reversible disclosures.
 
 ## Scope and limits
 

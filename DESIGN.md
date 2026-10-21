@@ -20,7 +20,13 @@ Precision updates the existing black `#0c0d0f`, silver `#eeefed`, red `#d71425` 
 
 ## Motion and accessibility
 
-The opening scrolls naturally at every width. Camera/light motion follows scrolling and pointer input; short entrances never gate reading. Component transitions use 180ms, with a 220ms mobile sheet entrance. System reduced-motion changes cancel animation immediately. Phone header scrolls away; the contextual contact shortcut hides while form/contact/closing/footer actions are visible. Menu and hidden shortcut use inert appropriately. No light slider, motion toggle or scroll label is shown.
+The opening scrolls naturally at every width; camera/light motion follows scrolling and pointer input. Sections use one-time, lightly staggered entrances across service choices, gallery cards, care choices, approach, branches, FAQ and footer. Entrances take 480ms on phones and 620ms on desktop, with at most 165ms of staggering. Content is visible without motion JavaScript; no entrance uses a persistent hidden state.
+
+Desktop service changes move the description and crossfade the photograph. Compact service accordions, photo disclosures and FAQ animate both opening and closing through their measured heights in 420ms, then release to intrinsic height. Closing service content becomes inert immediately. Reversing a disclosure or selecting another service interrupts the current transition and settles the latest state. Resizing also releases temporary heights before the responsive layout changes.
+
+Care choices acknowledge selection with a short scale/checkmark response. Summary rows keep their DOM identity, animate additions and reposition surviving rows; list height changes smoothly. Gallery viewing animates the dialog entrance and uses directional 420ms photo transitions. A decorative, non-interactive copy retains the outgoing frame while the next image decodes, then fades away. Rapid navigation, load errors and closing remove those copies.
+
+Component hover/focus transitions use 180ms, with a 220ms mobile city sheet entrance. The shared animation controller cancels effects and resolves pending disclosure states when system reduced motion activates or the page becomes hidden. With reduced motion, native disclosures and all state changes are immediate. Phone header scrolls away; the contextual contact shortcut hides while form/contact/closing/footer actions are visible. Menu and hidden shortcut use inert appropriately. No light slider, motion toggle or scroll label is shown.
 
 ## Content
 
