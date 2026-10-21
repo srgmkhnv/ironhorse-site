@@ -373,13 +373,13 @@
   ],
   "narrative": {
     "northStar": "The Light Tunnel",
-    "overview": "The Light Tunnel translates the supplied black, red and silver shield into a dark automotive studio: broad engineered lettering, a single illuminated automobile, precise rules and squared controls. Large silver service and branch surfaces interrupt the black ground; saturated red fields give the care form and final invitation their own visual weight.\n\nThe built system is flat and deliberate. A scroll-directed photographic inspection pass moves light and camera framing on desktop and mobile, while interface states use a red stroke, an underline, directional movement or an inverted surface. A finite entrance introduces the mechanism; subsequent continuous movement follows visitor input. Russian body copy stays sober and readable beside the wide display face. The current photographs are AI-regenerated from nine owner-supplied vehicle images: retouching removes clutter and replaces building backgrounds with studio settings. Visible disclosures identify the edits; photographic color and finish remain image content rather than new UI accents. The purple BMW with gold wheels anchors the hero, and the same owner series supplies service, approach and gallery imagery.",
+    "overview": "The Light Tunnel translates the supplied black, red and silver shield into a dark automotive studio: broad engineered lettering, a single illuminated automobile, precise rules and squared controls. Large silver service and branch surfaces interrupt the black ground; saturated red fields give the care form and final invitation their own visual weight.\n\nThe built system is flat and deliberate. A scroll-directed photographic inspection pass moves light and camera framing on desktop and mobile, while interface states use a red stroke, an underline, directional movement or an inverted surface. A finite entrance introduces the mechanism; subsequent continuous movement follows visitor input. Russian body copy stays sober and readable beside the wide display face. The current photographs are AI-regenerated from nine owner-supplied vehicle images: retouching removes clutter and replaces building backgrounds with studio settings. At the owner’s request, retouching labels and background-replacement notices are omitted from the public interface; source provenance remains in the asset metadata. Photographic color and finish remain image content rather than new UI accents. The purple BMW with gold wheels anchors the hero, and the same owner series supplies service, approach and gallery imagery.",
     "keyCharacteristics": [
       "Black studio ground with silver reading surfaces and branded red fields.",
       "Wide Unbounded headings paired with compact Golos text.",
       "Squared controls, fine rules and flat tonal layers.",
       "Image-bound light and camera movement on desktop and mobile, with an explicit motion control and a reduced-motion alternative.",
-      "Owner-supplied vehicle imagery with visible AI-retouching disclosures, native gallery scrolling and a full-photo viewer."
+      "Owner-supplied vehicle imagery, native gallery scrolling and a full-photo viewer without technical retouching labels."
     ],
     "rules": [
       {
@@ -403,7 +403,7 @@
       "Do retain square controls, visible keyboard focus and explicit selected states.",
       "Do preserve responsive tab orientation, scrollable mobile choices and meaningful touch/keyboard motion controls on mobile.",
       "Do honor system reduced motion by default, allow explicit motion opt-in, and settle interrupted interactions to their requested state.",
-      "Do visibly disclose AI retouching and background replacement on owner-derived photographs and preserve their source provenance.",
+      "Do preserve source provenance for owner-derived photographs in asset metadata; keep technical retouching notices out of the public interface as requested by the owner.",
       "Do retain native gallery scrolling, visible bounded rail controls, full-image containment and keyboard/touch access in the viewer."
     ],
     "donts": [
