@@ -3,5 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "Iron Horse detailing studio website",
-  "scripts": { "start": "python -m http.server 3000 --directory dist", "check": "node --check dist/app.js" }
+  "scripts": {
+    "start": "python -m http.server 3000 --directory dist",
+    "check": "node --check dist/app.js && node --check dist/motion.js && node --check dist/gallery.js",
+    "test:ui": "node tests/ui.mjs"
+  }
 }

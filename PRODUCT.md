@@ -28,3 +28,7 @@ Nine originals retained at /workspace/ironhorse-sources/, AI-regenerated origina
 
 ## Owner interface feedback
 Use exact vector wordmark glyphs from the supplied PDF in header/footer. Navigation should be stronger and heavier. Present complete service photographs rather than cropped horizontal strips. Use a polished city picker and the standard WhatsApp brand icon. Omit the page motion toggle, light slider and bottom hero scroll label; preserve automatic motion and system reduced-motion support. The footer should carry the brand with useful branch contacts.
+
+## Current direction after visual review
+
+The owner rejected the “Под знаком коня” implementation and requested corrections based on independent agent reviews, followed by publication to GitHub. Restore the original vehicle-led visual foundation: large automotive photograph, restrained separators, existing black/red/silver identity and exact wordmark in header/footer. Remove the oversized repeated logo and shield-shaped content fields. Keep responsive services, optional full-photo disclosures, the contrasting care summary, synchronized branch selection, direct WhatsApp entry and all gallery/accessibility improvements. No further self-assigned quality score is treated as acceptance evidence.

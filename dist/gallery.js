@@ -11,14 +11,27 @@
   const reduce=matchMedia('(prefers-reduced-motion:reduce)');
   let selected=0,request=0,frame=0,opener=null,entrance=null,startTouch=null;
   const motion=()=>window.IHMotion?window.IHMotion.enabled:!reduce.matches;
+  const desktop=matchMedia('(min-width: 1101px)');
+  const groups=[...rail.querySelectorAll('.photo-group')];
+  function stops(){
+    const origin=rail.getBoundingClientRect().left+rail.clientLeft;
+    return (desktop.matches?groups:cards).map(node=>Math.max(0,node.getBoundingClientRect().left-origin+rail.scrollLeft));
+  }
   function updateRail(){
-    frame=0;const step=cards[0].getBoundingClientRect().width+parseFloat(getComputedStyle(rail).columnGap);const start=Math.min(cards.length-1,Math.max(0,Math.round(rail.scrollLeft/step)));const visible=Math.max(1,Math.floor((rail.clientWidth+parseFloat(getComputedStyle(rail).columnGap))/step));const end=Math.min(cards.length,start+visible);
-    document.querySelector('#gallery-position').textContent=visible===1?`Фото ${start+1} из ${cards.length}`:`Фото ${start+1}–${end} из ${cards.length}`;
+    frame=0;
+    const bounds=rail.getBoundingClientRect();
+    const visible=cards.map((card,index)=>({index,rect:card.getBoundingClientRect()})).filter(({rect})=>Math.min(bounds.right,rect.right)-Math.max(bounds.left,rect.left)>=rect.width*.5);
+    const first=(visible[0]?.index??0)+1,last=(visible.at(-1)?.index??0)+1;
+    document.querySelector('#gallery-position').textContent=first===last?`Фото ${first} из ${cards.length}`:`Фото ${first}–${last} из ${cards.length}`;
     document.querySelector('.gallery-prev').disabled=rail.scrollLeft<=4;
-    document.querySelector('.gallery-next').disabled=rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-3;
+    document.querySelector('.gallery-next').disabled=rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-4;
   }
   const queueRail=()=>{if(!frame)frame=requestAnimationFrame(updateRail);};
-  const moveRail=direction=>rail.scrollBy({left:direction*(cards[0].getBoundingClientRect().width+parseFloat(getComputedStyle(rail).columnGap)),behavior:motion()?'smooth':'auto'});
+  function moveRail(direction){
+    const positions=stops();
+    const next=direction>0?positions.find(position=>position>rail.scrollLeft+8):positions.findLast(position=>position<rail.scrollLeft-8);
+    rail.scrollTo({left:next??(direction>0?rail.scrollWidth:0),behavior:motion()?'smooth':'auto'});
+  }
   document.querySelector('.gallery-prev').addEventListener('click',()=>moveRail(-1));
   document.querySelector('.gallery-next').addEventListener('click',()=>moveRail(1));
   rail.addEventListener('scroll',queueRail,{passive:true});window.addEventListener('resize',queueRail,{passive:true});
@@ -32,7 +45,7 @@
   }
   shots.forEach((shot,index)=>shot.addEventListener('click',()=>{opener=shot;viewer.showModal();document.documentElement.classList.add('photo-viewing');show(index);close.focus({preventScroll:true});}));
   close.addEventListener('click',()=>viewer.close());
-  viewer.addEventListener('close',()=>{++request;entrance?.cancel();image.hidden=true;document.documentElement.classList.remove('photo-viewing');opener?.focus({preventScroll:true});});
+  viewer.addEventListener('close',()=>{if(viewer.open)return;++request;entrance?.cancel();image.hidden=true;document.documentElement.classList.remove('photo-viewing');opener?.focus({preventScroll:true});});
   document.querySelector('#photo-prev').addEventListener('click',()=>show(selected-1));document.querySelector('#photo-next').addEventListener('click',()=>show(selected+1));
   viewer.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();show(selected+(event.key==='ArrowRight'?1:-1));}});
   viewer.addEventListener('click',event=>{if(event.target!==viewer)return;const rect=viewer.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)viewer.close();});
