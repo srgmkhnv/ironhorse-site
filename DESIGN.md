@@ -111,7 +111,7 @@ The built system is flat and deliberate. A scroll-directed photographic inspecti
 - Black studio ground with silver reading surfaces and branded red fields.
 - Wide Unbounded headings paired with compact Golos text.
 - Squared controls, fine rules and flat tonal layers.
-- Image-bound light and camera movement on desktop and mobile, with an explicit motion control and a reduced-motion alternative.
+- Image-bound light and camera movement on desktop and mobile, with system-controlled reduced motion and no visible animation controls.
 - Owner-supplied vehicle imagery, native gallery scrolling and a full-photo viewer without technical retouching labels.
 
 ## Colors
@@ -134,7 +134,9 @@ The palette follows the actual shield: black studio surfaces, silver lettering a
 
 ## Typography
 
-**Display Font:** Unbounded (sans-serif fallback), locally served variable font (200–900).
+**Brand Lettering:** Exact outlined glyphs from the supplied logo PDF in `assets/wordmark.svg`; never typeset an approximation. The header combines it with the authentic shield; the footer uses it at full width.
+
+**Display Font:** Unbounded (sans-serif fallback), locally served variable font (200–900). The hero is (600), desktop navigation (650), and service/footer headings (600).
 **Body Font:** Golos (sans-serif fallback), locally served variable font (400–900).
 
 **Character:** Wide, engineered display forms carry the brand; straightforward Russian text handles description and decisions. Headings use balanced wrapping and tight negative tracking rather than ornamental labels.
@@ -145,31 +147,31 @@ The palette follows the actual shield: black studio surfaces, silver lettering a
 - **Title:** Service-panel headings use the frontmatter role; (22px) at up to (1180px), (19px) at up to (850px), and (22px) at up to (600px). Branch address headings use their own fluid size.
 - **Body:** Base text uses the frontmatter role and a paragraph cap of (70ch). Descriptive panel text uses (13–16px) and generous line heights (1.6–1.8).
 - **Label:** Primary button labels use the frontmatter role; mobile buttons use (13px). Navigation is (13px) on desktop and fluid display type `clamp(26px,6.5vw,48px)` in the opened compact menu, becoming (28px) up to (600px).
-- **Support:** The final stylesheet overrides establish scroll prompts, service tags, motion-toggle text and light-control text at (11px) across viewport sizes. Technical photo labels and repeated service/form/branch notices have been removed at the owner’s request.
+- **Support:** Service tags remain (11px); gallery and operational labels retain their established sizes. Motion controls, hero scroll labels and technical photo notices have been removed at the owner’s request.
 
-**The Two Voices Rule.** Use Unbounded for the brand and major headings; use Golos for prose, controls and operational detail.
+**The Two Voices Rule.** Use the exact supplied vector wordmark for Iron Horse lettering, Unbounded for major headings and navigation, and Golos for prose, controls and operational detail.
 
 ## Layout
 
-The site uses full-width bands with a shared fluid horizontal gutter from frontmatter, rather than a centered maximum-width page box. The desktop header is (96px) tall. Main sections use vertical padding (110px); the approach section uses (130px). The header remains sticky and carries a distance-based page-progress rule. The hero is viewport-relative below the header, with content above imagery and a bottom navigation row. With motion enabled, its sticky inspection section adds (76svh) of scroll travel; scrolling moves camera framing and the photographic beam rather than starting a loop.
+The site uses full-width bands with a shared fluid horizontal gutter from frontmatter, rather than a centered maximum-width page box. The desktop header is (96px) tall. Main sections use vertical padding (110px); the approach section uses (130px). The header remains sticky and carries a distance-based page-progress rule. The hero is viewport-relative below the header, with content above imagery; the former bottom navigation label and location row are removed. With motion enabled, its sticky inspection section adds (76svh) of scroll travel; scrolling moves camera framing and the photographic beam rather than starting a loop.
 
-Service and branch explorers use unequal two-column grids (.8fr / 1.2fr) with a (60px) gap. Care, approach and FAQ use two columns with (80–85px) gaps. Desktop service details use (30px) padding; branch panels use (42px). Most controls use thin borders and compact spacing inside these generous section intervals.
+Branch explorers retain the unequal two-column grid (.8fr / 1.2fr) with a (60px) gap. Services use a narrower tab column (.7fr) and wider panel (2fr), with (40px) between them. Care, approach and FAQ use two columns with (80–85px) gaps. Desktop service details use (30px) padding; branch panels use (42px). Most controls use thin borders and compact spacing inside these generous section intervals. The expanded dark footer has a shield/heading row, footer navigation, three directly linked branch contacts, an oversized exact vector wordmark, copyright and a back-to-top action. Branch contacts use three columns, stacking at up to (700px).
 
-At up to (1180px), split gaps tighten, branch padding becomes (32px), header contact and hero city list disappear. At up to (850px), the header becomes (82px), desktop links become a toggle and full-height compact menu, section padding becomes (80px), care stacks into one column and the closing band stacks; explorers and FAQ still retain two columns.
+At up to (1180px), split gaps tighten, branch padding becomes (32px), header contact and hero city list disappear. Desktop links become a compact-menu toggle at up to (1100px). At up to (850px), the header becomes (82px), section padding becomes (80px), care stacks into one column and the closing band stacks; explorers and FAQ still retain two columns.
 
-At up to (600px), the gutter is (22px), header (76px), and section padding (65px). Service and branch explorers, approach, FAQ and form fields become single-column. Service tabs become horizontally scrollable bordered choices; branch tabs become a horizontal underlined row. Care options remain two columns. Hero image framing shifts below its text; height is `calc(100svh - 76px)` with a (640px) minimum, reducing to (630px) up to (360px). Enabled inspection travel is (65svh), with a visible touch/keyboard light control above the bottom navigation. At viewport heights up to (650px), the enabled hero becomes a non-sticky (740px) section and the extra inspection travel is removed. A fixed bottom city/contact bar appears near the end of the hero story; safe-area inset is included in its padding and the footer reserves (100px) below. This bar is inert while hidden or while the compact menu is open. No content needs the photographic light to remain visible.
+At up to (600px), the gutter is (22px), header (76px), and section padding (65px). Service and branch explorers, approach, FAQ and form fields become single-column. Service tabs become horizontally scrollable bordered choices; branch tabs become a horizontal underlined row. Care options remain two columns. Hero image framing shifts below its text; height is `calc(100svh - 76px)` with a (640px) minimum, reducing to (630px) up to (360px). Enabled inspection travel is (65svh), without the former light-range control or motion toggle. At viewport heights up to (650px), the enabled hero becomes a non-sticky (740px) section and the extra inspection travel is removed. A fixed bottom city/contact bar appears near the end of the hero story; safe-area inset is included in its padding and the footer reserves (100px) below. This bar is inert while hidden or while the compact menu is open. No content needs the photographic light to remain visible.
 
 The photographic gallery uses native horizontal scrolling with snap-to-start cards: three columns with (24px) gaps, two with (20px) gaps at up to (1000px), and (82%) card widths with (16px) gaps at up to (600px). The narrow layout deliberately shows the next card edge. Portrait card frames use a (2:3) ratio and cropped images; the viewer uses `object-fit: contain` to show the entire edited photograph. Its desktop dialog is bounded by `min(1240px,96vw)` width and `min(950px,95dvh)` height, with a full-viewport, safe-area-aware layout at up to (600px).
 
 ## Elevation & Depth
 
-Content surfaces stay flat: depth comes from black/silver/red surface changes, one-pixel rules, image gradients and a brightened image duplicate behind a moving angled linear mask. The inspection beam has a narrow local glow; the range thumb has a small shadow and the compact menu has an edge shadow. These are specific light/control/overlay treatments, not a floating-card vocabulary.
+Content surfaces stay flat: depth comes from black/silver/red surface changes, one-pixel rules, image gradients and a brightened image duplicate behind a moving angled linear mask. The inspection beam has a narrow local glow; compact-menu and city-list overlays have local edge shadows. These are specific light/control/overlay treatments, not a floating-card vocabulary.
 
-**The Light Within Rule.** Keep the light reveal and photographic gradients inside image composition; content surfaces use tonal separation and fine rules. Reserve the existing local shadows for the inspection beam, range thumb and compact navigation overlay.
+**The Light Within Rule.** Keep the light reveal and photographic gradients inside image composition; content surfaces use tonal separation and fine rules. Reserve local shadows for the inspection beam and navigation/city overlays.
 
 ## Shapes
 
-Controls, information panels, tabs and chips have square corners. Thin rectangular strokes and underlines define interaction boundaries. The authentic shield retains its supplied silhouette. Small circular red separators belong to the brand strip; the square-control rule does not prohibit those native dots. Inline SVG icons use fine strokes and rounded stroke caps. The light-range thumb is a small circular control; it does not change the square form of buttons and panels.
+Controls, information panels, tabs and chips have square corners. Thin rectangular strokes and underlines define interaction boundaries. The authentic shield retains its supplied silhouette. Small circular red separators belong to the brand strip; the square-control rule does not prohibit those native dots. Inline SVG icons use fine strokes and rounded stroke caps. The removed range slider is not part of the interface.
 
 ## Components
 
@@ -187,17 +189,17 @@ Service tags are static squared outlines: one-pixel gray border, frontmatter pad
 
 ### Cards / Containers
 
-The service panel is a square black surface with an image above its (30px) text inset. Its image reveals through a scroll-driven top clip (up to 24%); selection changes use a cancellable (500ms) outgoing image fade/scale and a (700ms) incoming scale/brightness transition. The former panel-hover image zoom is disabled. The approach photograph has a small scroll-driven vertical shift within its cropped frame. Branch panels are square silver-gray fields with responsive padding (42 / 32 / 30 / 27px 24px). Neither uses a shadow.
+The service explorer uses a narrower ruled tab column beside a black image/text panel. The panel contains a full (2:3) portrait on the left and vertically centered descriptive content on the right; images use `object-fit: contain`, with no scroll clipping or zoom cropping. Switching services crossfades the outgoing image over (500ms) and fades/brightens the new frame over (700ms). At up to (1100px), service tabs become a horizontal scroll rail; at up to (600px), the panel stacks photograph above text. The approach photograph retains its small scroll-directed shift. Branch panels preserve the incumbent square silver-gray fields.
 
 ### Inputs / Fields
 
-Care fields are transparent on deep red, with white text and a half-opacity white bottom rule. Padding is (15px 0 12px). The optional vehicle input has a white caret in this section. Mobile text and select fields use (16px). Focus uses a white two-pixel outline with (3px) offset. The header city selector is a compact native dark select.
+Care fields are transparent on deep red, with white text and a half-opacity white bottom rule. Padding is (15px 0 12px). The optional vehicle input has a white caret in this section. Mobile text and select fields use (16px). Focus uses a white two-pixel outline with (3px) offset. The header city picker is a squared (46px) button. Its dark popover lists three cities with street addresses, a check on the selected option, and visible keyboard focus. Arrow keys, Home/End and Enter/Space select; Escape/outside click/Tab close without trapping focus. City selection synchronizes the contact panel, care form, mobile city and general WhatsApp links. The care form retains its native city select.
 
 ### Navigation
 
-The supplied shield and wordmark anchor a quiet sticky header. Desktop links reveal a red underline over (.4s); the compact toggle uses two one-pixel lines rotating into a cross over (.3s). At up to (850px), the menu fills the viewport below the header with a dark background, ruled display-type links and small red directional strokes. It opens with a (550ms) clip reveal and staggered link entrances (55ms steps, capped at 165ms), and closes over (230ms). Repeated toggles cancel the previous transition; a generation check prevents a stale close from hiding a reopened menu.
+The authentic shield and exact vector wordmark anchor the sticky header. Desktop links use Unbounded (650), silver text and a two-pixel red reveal underline over (.4s); the compact toggle uses two one-pixel lines rotating into a cross over (.3s). At up to (1100px), the menu fills the viewport below the header with a dark background, ruled display-type links and small red directional strokes. It opens with a (550ms) clip reveal and staggered link entrances (55ms steps, capped at 165ms), and closes over (230ms). Repeated toggles cancel the previous transition; a generation check prevents a stale close from hiding a reopened menu.
 
-The open menu locks document scrolling and makes main content, footer and bottom contact bar inert. Its own vertical scrolling and automatic first/last link margins keep every destination reachable on short screens. Escape closes it and restores focus to the toggle; link selection, skip-link activation, outside click and resizing above (850px) also close it. Hidden bottom contact controls remain inert after closing.
+The open menu locks document scrolling and makes main content, footer and bottom contact bar inert. Its own vertical scrolling and automatic first/last link margins keep every destination reachable on short screens. Escape closes it and restores focus to the toggle; link selection, skip-link activation, outside click and resizing above (1100px) also close it. Hidden bottom contact controls remain inert after closing.
 
 ### Service and branch tabs
 
@@ -221,19 +223,19 @@ Full-size images stay hidden until decoding completes. A request counter prevent
 
 ### Photographic inspection and motion control
 
-The shared easing is `cubic-bezier(.16,1,.3,1)`. The finite hero entrance reveals heading, prose and actions over (900ms), staggered by (90ms), with a (1500ms) camera move and one (2400ms) light pass. Scroll cancels the introductory camera/light movement and takes over: the beam traverses (20–85%), the camera scales by up to (1.12) on desktop or (1.16) on mobile, and the text shifts upward while retaining at least (.55) opacity. The hero progress line and horizontal brand band track scroll distance; neither loops. Multi-line section headings reveal once over (750ms), staggered by (75ms).
+The shared easing is `cubic-bezier(.16,1,.3,1)`. The finite hero entrance reveals heading, prose and actions over (900ms), staggered by (90ms), with a (1500ms) camera move and one (2400ms) light pass. Scroll cancels the introductory camera/light movement and takes over: the beam traverses (20–85%), the camera scales by up to (1.12) on desktop or (1.16) on mobile, and the text shifts upward while retaining at least (.55) opacity. The horizontal brand band track scroll distance; neither loops. Multi-line section headings reveal once over (750ms), staggered by (75ms).
 
-Pointer and touch input steer the same photographic light as the labelled native (0–100) range, which supplies keyboard operation. Touch preserves vertical page scrolling and pinch zoom. Leaving/releasing the hero or scrolling returns light control to the scroll position. Scroll rendering uses a coalesced animation frame, while direct steering updates the light position without an idle loop; section geometry refreshes on resize, fonts, image loads and content-size changes. Hidden documents pause active animations and schedule no render frames.
+Pointer/touch movement steers the photographic beam decoratively; scrolling resumes the automatic light position. No range slider, motion toggle or bottom hero scroll label is visible. Motion never carries necessary information or controls access to services/contact. Scroll rendering is coalesced into a frame; geometry refreshes on resize, fonts, image loads and content changes. Hidden documents pause animations and schedule no render frames.
 
-The visible motion button turns the complete motion system off immediately: running animations cancel, disclosures settle, camera/text/brand transforms reset, light and its control hide, and transitions and smooth scrolling stop. System reduced-motion preference defaults to this quiet state. Explicitly enabling motion overrides that preference for the current page; later system changes apply only until a visitor makes an explicit choice. Static content, tabs, forms, FAQ and navigation remain usable in either state.
+System `prefers-reduced-motion` directly controls motion, including runtime changes. Reduced motion cancels running animations, settles FAQ state, resets camera/content transforms, hides light, and disables transitions/smooth scrolling. All content, tabs, form, FAQ, gallery and navigation remain usable. There is no page-level motion override.
 
 ## Do's and Don'ts
 
 ### Do:
 - **Do** preserve the supplied shield, black/red/silver identity and two-font relationship.
 - **Do** retain square controls, visible keyboard focus and explicit selected states.
-- **Do** preserve responsive tab orientation, scrollable mobile choices and meaningful touch/keyboard motion controls on mobile.
-- **Do** honor system reduced motion by default, allow explicit motion opt-in, and settle interrupted interactions to their requested state.
+- **Do** preserve responsive tab orientation, scrollable service choices and keyboard access to city selection and navigation.
+- **Do** honor system reduced motion, including runtime changes, and settle interrupted interactions to their requested state.
 - **Do** preserve source provenance for owner-derived photographs in asset metadata; keep technical retouching notices out of the public interface as requested by the owner.
 - **Do** retain native gallery scrolling, visible bounded rail controls, full-image containment and keyboard/touch access in the viewer.
 

@@ -1,4 +1,4 @@
-/* The same inspection sequence is driven by scroll, touch, pointer and keyboard. */
+/* Photographic motion follows scroll and pointer input; the system preference controls reduced motion. */
 (() => {
   'use strict';
   const root = document.documentElement;
@@ -6,8 +6,6 @@
   const story = document.querySelector('.hero-story');
   const camera = document.querySelector('.hero-camera');
   const content = document.querySelector('.hero-content');
-  const light = document.querySelector('#paint-light-control');
-  const toggle = document.querySelector('.motion-toggle');
   const bottom = document.querySelector('.mobile-bottom');
   const nav = document.querySelector('#mobile-nav');
   const main = document.querySelector('main');
@@ -20,7 +18,6 @@
   const panelAnimations = new WeakMap();
   const disclosures = new Map();
   let enabled = !system.matches;
-  let explicitChoice = false;
   let frame = 0;
   let measureFrame = 0;
   let metrics;
@@ -46,9 +43,8 @@
   function measure() {
     measureFrame = 0;
     const band = document.querySelector('.brand-strip');
-    const photo = document.querySelector('.service-visual');
     const craft = document.querySelector('.approach-photo');
-    metrics = { storyTop:documentTop(story), travel:Math.max(1, story.offsetHeight-hero.offsetHeight || hero.offsetHeight*.9), storyBottom:documentTop(story)+story.offsetHeight, bandTop:documentTop(band), photoTop:documentTop(photo), craftTop:documentTop(craft), craftHeight:craft.offsetHeight, pageHeight:Math.max(1,root.scrollHeight-innerHeight) };
+    metrics = { storyTop:documentTop(story), travel:Math.max(1, story.offsetHeight-hero.offsetHeight || hero.offsetHeight*.9), storyBottom:documentTop(story)+story.offsetHeight, bandTop:documentTop(band), craftTop:documentTop(craft), craftHeight:craft.offsetHeight, pageHeight:Math.max(1,root.scrollHeight-innerHeight) };
     schedule();
   }
   function requestMeasure() { if (!measureFrame) measureFrame = requestAnimationFrame(measure); }
@@ -73,13 +69,10 @@
       if (manualLight===null && !lightAnimation) {
         const beam=20+p*65;
         camera.style.setProperty('--beam-position',`${beam}%`);
-        light.value=String(Math.round(beam));
       }
     }
     const bandP=clamp((y+vh-metrics.bandTop)/(vh+180));
     root.style.setProperty('--brand-x',`${-bandP*(small.matches?205:115)}px`);
-    const photoP=clamp((y+vh-metrics.photoTop)/(vh*.65));
-    document.querySelector('.service-visual').style.setProperty('--photo-inset',`${(1-photoP)*24}%`);
     const craftP=clamp((y+vh-metrics.craftTop)/(vh+metrics.craftHeight));
     document.querySelector('.approach-photo').style.setProperty('--craft-y',`${(craftP-.5)*-38}px`);
   }
@@ -94,8 +87,8 @@
     if (pictureGhost) { pictureGhost.getAnimations().forEach(a=>a.cancel());pictureGhost.remove();pictureGhost=null; }
     if (!enabled) return;
     const ghost=image.cloneNode();ghost.removeAttribute('id');ghost.alt='';ghost.setAttribute('aria-hidden','true');ghost.className='service-image-out';image.after(ghost);pictureGhost=ghost;
-    const exit=animate(ghost,[{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(1.06)'}],{duration:500});
-    animate(image,[{transform:'scale(1.065)',filter:'brightness(.65)'},{transform:'scale(1)',filter:'brightness(1)'}],{duration:700});
+    const exit=animate(ghost,[{opacity:1},{opacity:0}],{duration:500});
+    animate(image,[{opacity:.45,filter:'brightness(.8)'},{opacity:1,filter:'brightness(1)'}],{duration:700});
     if(exit) exit.addEventListener('finish',()=>{ghost.remove();if(pictureGhost===ghost)pictureGhost=null;},{once:true});
   }
   function menu(open) {
@@ -118,14 +111,10 @@
   function settleDisclosures() {
     for(const [details,state] of disclosures) { state.animation?.cancel();details.open=state.expanded;state.wrapper.style.height=''; }
   }
-  function setEnabled(value, user=false) {
-    enabled=value; if(user)explicitChoice=true;
+  function setEnabled(value) {
+    enabled=value;
     if(!value) { animations.forEach(a=>a.cancel());animations.clear();lightAnimation=null;settleDisclosures();pictureGhost?.remove();pictureGhost=null;nav.hidden=document.querySelector('.menu-toggle').getAttribute('aria-expanded')!=='true'; }
     root.dataset.motion=value?'on':'off';
-    toggle.setAttribute('aria-pressed',String(!value));
-    toggle.setAttribute('aria-label',value?'Остановить анимацию':'Включить анимацию');
-    toggle.querySelector('span').textContent=value?'Движение':'Без движения';
-    toggle.querySelector('use').setAttribute('href',value?'#pause':'#play');
     manualLight=null;
     if(!value) { content.style.removeProperty('--heading-y');content.style.removeProperty('--heading-opacity'); }
     requestMeasure();
@@ -135,11 +124,8 @@
     lightAnimation?.cancel();lightAnimation=null;
     manualLight=clamp(Number(value),0,100);
     camera.style.setProperty('--beam-position',`${manualLight}%`);
-    light.value=String(Math.round(manualLight));
   }
-  toggle.addEventListener('click',()=>setEnabled(!enabled,true));
-  system.addEventListener('change',event=>{if(!explicitChoice)setEnabled(!event.matches);});
-  light.addEventListener('input',()=>steer(light.value));
+  system.addEventListener('change',event=>setEnabled(!event.matches));
   hero.addEventListener('pointermove',event=>{
     if(!enabled||event.target.closest('a,button,input,select'))return;
     if(event.pointerType==='touch'&&event.buttons===0)return;

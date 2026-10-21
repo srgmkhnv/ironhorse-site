@@ -25,3 +25,6 @@ Sources: https://iron-horse-ulitsa-abubakarova.clients.site/ ; https://iron-hors
 
 ## Owner photo series
 Nine originals retained at /workspace/ironhorse-sources/, AI-regenerated originals retained under /workspace/generated_images/. Delivery assets live at dist/assets/photos/, with exact prompts and source provenance in matching JSON sidecars. Preserve original car colors/finishes, recognizable vehicle details and the black/red/silver UI. No invented before/after claims, work prices, testimonials or customer attribution.
+
+## Owner interface feedback
+Use exact vector wordmark glyphs from the supplied PDF in header/footer. Navigation should be stronger and heavier. Present complete service photographs rather than cropped horizontal strips. Use a polished city picker and the standard WhatsApp brand icon. Omit the page motion toggle, light slider and bottom hero scroll label; preserve automatic motion and system reduced-motion support. The footer should carry the brand with useful branch contacts.
