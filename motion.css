@@ -1,0 +1,59 @@
+:root {
+  --camera-scale:1;
+  --camera-x:0%;
+  --camera-y:0px;
+  --beam-position:38%
+}
+.hero-story {
+  position:relative
+}
+.hero-camera {
+  transform:translate3d(var(--camera-x),var(--camera-y),0) scale(var(--camera-scale));
+  isolation:isolate
+}
+/* taste-skill-ignore: owner-approved photographic light mask, not a gradient surface. */
+.paint-light {
+  /* taste-skill-ignore: approved photographic light mask. */mask-image:linear-gradient(108deg,transparent calc(var(--beam-position) - 18%),#000 calc(var(--beam-position) - 4%),#000 calc(var(--beam-position) + 4%),transparent calc(var(--beam-position) + 18%))
+}
+html.menu-open {
+  overflow:hidden
+}
+.service-details,.care-review,.approach-content {
+  min-width:0
+}
+html[data-motion="off"] *,html[data-motion="off"] *:before,html[data-motion="off"] *:after {
+  animation:none!important;
+  transition:none!important;
+  scroll-behavior:auto!important
+}
+html[data-motion="off"] .hero-camera {
+  transform:none!important
+}
+html[data-motion="off"] .paint-light {
+  display:none
+}
+/* Temporary size effects always release back to intrinsic content height. */
+.motion-sizing {
+  min-height:0;
+  overflow:clip;
+  overflow-anchor:none
+}
+.service-visual>.service-photo-outgoing {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  pointer-events:none
+}
+.faq-list details[data-motion-open=false] summary svg,
+.service-visual[data-motion-open=false]>summary svg {
+  transform:none
+}
+html[data-motion=on] .photo-viewer[open]::backdrop {
+  animation:viewer-backdrop-enter 300ms ease-out
+}
+@keyframes viewer-backdrop-enter {
+  from {background:#0000}
+  to {background:#000e}
+}
